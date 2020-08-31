@@ -106,7 +106,7 @@ Please post in the [forum](https://github.com/nus-cs2113-AY2021S1/forum/issues) 
 
 The file sizes of the deliverables should not exceed the limits given below.
 
-%%**Reason:** It is hard to download big files during the practical exam due to limited WiFi bandwidth at the venue%%:
+**Reason:** It is hard to download big files during the practical exam due to limited WiFi bandwidth at the venue%%:
 
 - JAR file: 100Mb (Some third-party software -- e.g., Stanford NLP library, certain graphics libraries -- can cause you to exceed this limit)
 - PDF files: 15Mb/file (Not following [the recommended method of converting to PDF format](https://se-education.org/guides/tutorials/savingPdf.html) can cause big PDF files. Another cause is using unnecessarily high resolution images for screenshots).
