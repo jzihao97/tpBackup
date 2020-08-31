@@ -1,6 +1,16 @@
 # AY2020/20 CS2113 Team project
 
-##  List of Team Task
+## Planning Document
+
+* [Google Drive Folder](https://drive.google.com/drive/folders/1-TdejHDbFp2Xw_Ajygk_BjaJ810fk_fj)
+
+
+
+## Team Allocation 
+
+*Do choose your roles and task that you wish to work on in this [link](https://docs.google.com/spreadsheets/d/1-3pKWRHezRGpevyItV5VjPeRqTIq3OV4J_NNtGrGpzQ/edit?usp=sharing)*
+
+### List of Team Task
 
 1. Setting up the GitHub team org/repo
 2. Necessary general code enhancements
@@ -12,7 +22,7 @@
 
 
 
-## List of Roles and Responsibilities
+### List of Roles and Responsibilities
 
 - *Team lead*: Responsible for overall project coordination.
 - *Documentation* (short for ‘in charge of documentation’): Responsible for the quality of various project documents.
