@@ -1,0 +1,8 @@
+moduleData/SemExamData.java
+ moduleData.SemExamData
+moduleData/TypeData.java
+ moduleData.TypeData
+moduleData/ModuleFullDetails.java
+ moduleData.ModuleFullDetails
+moduleData/ModuleData.java
+ moduleData.ModuleData
