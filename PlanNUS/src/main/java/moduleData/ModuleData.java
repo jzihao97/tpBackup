@@ -1,51 +1,38 @@
 package moduleData;
 
-import java.io.*;
-
 import com.google.gson.Gson;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.InputStreamReader;
+
 public class ModuleData {
-//    public static String StreamToString(InputStream in) {
-//        ByteArrayOutputStream result = new ByteArrayOutputStream();
+    public static ModuleDatum[] loadModuleInfo() {
 //        try {
-//            byte[] buffer = new byte[1024];
-//            int length;
-//            while ((length = in.read(buffer)) != -1) {
-//                result.write(buffer, 0, length);
-//            }
-//
-//
-//        } catch (IOException ioError){
-//            ioError.printStackTrace();
-//        }
-//        return result.toString();
-//    }
+            Gson gson = new Gson();
 
-    public static void loadModuleInfo() {
-        Gson gson = new Gson();
-
-//        try {
-            InputStream in = ModuleData.class.getResourceAsStream("/moduleInfo.json");
+            InputStream in = ModuleData.class.getResourceAsStream("/moduleData.json");
             Reader jsonReader = new InputStreamReader(in);
-            ModuleFullDetails[] moduleFullDetails = gson.fromJson(jsonReader, ModuleFullDetails[].class);
-//            BufferedReader bufferedReader = new BufferedReader(jsonReader);
-//
-//            String currentLine;
-//            while ((currentLine = bufferedReader.readLine()) != null) {
-//                System.out.println(currentLine);
-//            }
-//            InputStream in = ModuleData.class.getResource("./moduleInfo.json");
-//            System.out.println(Thread.currentThread().getContextClassLoader().getResourceAsStream("moduleInfo.json"));
-//            Reader fileReader = new InputStreamReader(in);
-//            ModuleFullDetails moduleFullDetails = gson.fromJson(fileReader, ModuleFullDetails.class);
-//
-//            System.out.println(moduleFullDetails);
-//        } catch (IOException ioError) {
-//            ioError.printStackTrace();
+            ModuleDatum[] moduleFullDetails = gson.fromJson(jsonReader, ModuleDatum[].class);
+
+            /** Uncomment below for testing purposes */
+//        for (int i = 0; i < moduleFullDetails.length; i++) {
+//            System.out.println(moduleFullDetails[i].toString());
+//        }
+
+            return moduleFullDetails;
+//        } catch (NullPointerException nullError) {
+//            System.out.println("File is missing");
 //        }
     }
 
     public static void main(String[] args) {
-        loadModuleInfo();
+        ModuleDatum[] allModules = loadModuleInfo();
+
+        /** Uncomment below for testing purposes */
+        for (int i = 0; i < allModules.length; i++) {
+            System.out.println(allModules[i].toString());
+        }
     }
 }
