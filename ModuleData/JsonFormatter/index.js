@@ -1,7 +1,8 @@
-console.log("testing");
+// import details from './moduleInfo.js';
+// import list from './moduleList.js';
 
-import details from './moduleInfo.json';
-import list from './moduleList.json';
+const details = require('./moduleInfo.js');
+const list = require('./moduleList.js');
 
 var templateObj = {
   moduleCode: "",
@@ -32,4 +33,7 @@ var templateObj = {
   corequisite: "",
 }
 
-var fullDetails =  
+console.log("this is the length of the list: " + list.length);
+console.log("this is the length of details: " + details.length);
+
+// for (var i = 0; i < list.length )
