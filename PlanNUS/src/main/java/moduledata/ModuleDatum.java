@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 //    "moduleCode",
@@ -46,154 +45,46 @@ public class ModuleDatum {
     public String getModuleCode() {
         return moduleCode;
     }
-//
-//    public void setModuleCode(String moduleCode) {
-//        this.moduleCode = moduleCode;
-//    }
-//
-//    public ModuleDatum withModuleCode(String moduleCode) {
-//        this.moduleCode = moduleCode;
-//        return this;
-//    }
-//
+
     public String getTitle() {
         return title;
     }
-//
-//    public void setTitle(String title) {
-//        this.title = title;
-//    }
-//
-//    public ModuleDatum withTitle(String title) {
-//        this.title = title;
-//        return this;
-//    }
-//
+
     public Integer getModuleCredit() {
         return moduleCredit;
     }
-//
-//    public void setModuleCredit(Integer moduleCredit) {
-//        this.moduleCredit = moduleCredit;
-//    }
-//
-//    public ModuleDatum withModuleCredit(Integer moduleCredit) {
-//        this.moduleCredit = moduleCredit;
-//        return this;
-//    }
-//
+
     public String getDepartment() {
         return department;
     }
-//
-//    public void setDepartment(String department) {
-//        this.department = department;
-//    }
-//
-//    public ModuleDatum withDepartment(String department) {
-//        this.department = department;
-//        return this;
-//    }
-//
+
     public String getFaculty() {
         return faculty;
     }
-//
-//    public void setFaculty(String faculty) {
-//        this.faculty = faculty;
-//    }
-//
-//    public ModuleDatum withFaculty(String faculty) {
-//        this.faculty = faculty;
-//        return this;
-//    }
-//
+
     public List<Integer> getSemester() {
         return semester;
     }
-//
-//    public void setSemester(List<Integer> semester) {
-//        this.semester = semester;
-//    }
-//
-//    public ModuleDatum withSemester(List<Integer> semester) {
-//        this.semester = semester;
-//        return this;
-//    }
-//
+
     public String getPreclusion() {
         return preclusion;
     }
-//
-//    public void setPreclusion(String preclusion) {
-//        this.preclusion = preclusion;
-//    }
-//
-//    public ModuleDatum withPreclusion(String preclusion) {
-//        this.preclusion = preclusion;
-//        return this;
-//    }
-//
+
     public List<Boolean> getAttributes() {
         return attributes;
     }
 
-//    public void setAttibutes(List<Boolean> attibutes) {
-//        this.attibutes = attibutes;
-//    }
-//
-//    public ModuleDatum withAttibutes(List<Boolean> attibutes) {
-//        this.attibutes = attibutes;
-//        return this;
-//    }
-//
     public String getPrerequisite() {
         return prerequisite;
     }
 
-//    public void setPrerequisite(String prerequisite) {
-//        this.prerequisite = prerequisite;
-//    }
-//
-//    public ModuleDatum withPrerequisite(String prerequisite) {
-//        this.prerequisite = prerequisite;
-//        return this;
-//    }
-//
     public String getCorequisite() {
         return corequisite;
     }
 
-//    public void setCorequisite(String corequisite) {
-//        this.corequisite = corequisite;
-//    }
-//
-//    public ModuleDatum withCorequisite(String corequisite) {
-//        this.corequisite = corequisite;
-//        return this;
-//    }
-
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
-    }
-
-//    public Map<String, Object> getAdditionalProperties() {
-//        return this.additionalProperties;
-//    }
-//
-//    public void setAdditionalProperty(String name, Object value) {
-//        this.additionalProperties.put(name, value);
-//    }
-//
-//    public ModuleDatum withAdditionalProperty(String name, Object value) {
-//        this.additionalProperties.put(name, value);
-//        return this;
-//    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(moduleCode).append(title).append(moduleCredit).append(department).append(faculty).append(semester).append(preclusion).append(attributes).append(prerequisite).append(corequisite).append(additionalProperties).toHashCode();
     }
 
     @Override
