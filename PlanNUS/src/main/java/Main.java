@@ -9,10 +9,10 @@ public class Main {
 //        ModuleDatum cs1010Data = allModules.getModuleFullDetails()[idx];
 //
 //        System.out.println(cs1010Data.toString());
-        Person Khenessa = new Person("Khenessa" , 3);
+        Person Bob = new Person("Bob" , 3);
         System.out.println("Oi type la");
-        Khenessa.addModule();
-        System.out.println(Khenessa.toString());
-        Khenessa.printList();
+        Bob.addModule();
+        System.out.println(Bob.toString());
+        Bob.printList();
     }
 }
