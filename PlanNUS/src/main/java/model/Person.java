@@ -51,17 +51,17 @@ public class Person {
                     return;
                 }
 
-                System.out.println("Grade (if applicable)?");
+                System.out.println("Grade received for " + moduleCode.toUpperCase() +"?");
                 String gradeValue = in.nextLine();
                 if (!checkValidGrade(gradeValue)) {
                     System.out.println("INVALID GRADE VALUE");
                     return;
                 }
-
                 Module newModuleToAdd = new Module(moduleCode, semesterValue, gradeValue);
                 modulesList.add(newModuleToAdd);
                 modulesAddedMap.put(moduleCode,newModuleToAdd);
-                System.out.println(newModuleToAdd.getModuleCode() + " added.");
+                System.out.println(newModuleToAdd.getModuleCode()
+                        + " added into Semester " + semesterValue + ".");
             } else { //module not offered by NUS
                 System.out.println(moduleCode + " IS NOT OFFERED BY NUS");
             }
@@ -106,13 +106,23 @@ public class Person {
             //Fallthrough
         case "F":
             //Fallthrough
-        case "CSU":
+        case "CS":
+            //Fallthrough
+        case "CU":
             //Fallthrough
         case "S":
             //Fallthrough
         case "U":
             //Fallthrough
         case "W":
+            //Fallthrough
+        case "IC":
+            //Fallthrough
+        case "IP":
+            //Fallthrough
+        case "AUD":
+            //Fallthrough
+        case "WU":
             //Fallthrough
         case "NT":
             return true;
