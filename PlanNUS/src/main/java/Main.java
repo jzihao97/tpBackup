@@ -1,6 +1,4 @@
 import model.Person;
-import moduledata.ModuleDatum;
-import moduledata.ModuleInitializer;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,6 +11,10 @@ public class Main {
         System.out.println("Oi type la");
         Bob.addModule();
         System.out.println(Bob.toString());
+        Bob.printList();
+        Bob.editModule();
+        Bob.printList();
+        Bob.editModule();
         Bob.printList();
     }
 }

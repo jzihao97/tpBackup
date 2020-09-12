@@ -4,6 +4,7 @@ public class Module {
     private String moduleCode;
     private int semesterIndex; // 1 to 8
     private String grade;
+    private Integer moduleCredit;
 
     public Module (String moduleCode, int semesterIndex, String grade) {
         setModuleCode(moduleCode);
@@ -14,6 +15,10 @@ public class Module {
     public String getModuleCode() {
         return moduleCode;
     }
+
+    public Integer getModuleCredit() { return moduleCredit;}
+
+    public void setModuleCredit(Integer moduleCredit) { this.moduleCredit = moduleCredit;}
 
     public void setModuleCode(String moduleCode) {
         this.moduleCode = moduleCode;
