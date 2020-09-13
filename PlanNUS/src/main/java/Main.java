@@ -16,5 +16,7 @@ public class Main {
         Bob.printList();
         Bob.editModule();
         Bob.printList();
+        Bob.removeModule();
+        Bob.printList();
     }
 }

@@ -22,6 +22,7 @@ public class Person {
     private final String ERROR_NOT_OFFERED = " IS NOT OFFERED BY NUS";
     private final String ERROR_DUPLICATE_MOD = "You already have this mod on your calendar!";
     private final String ERROR_NOT_ADDED = "You have not added this module into your list yet";
+    private final String ERROR_EDIT_OPTION = "Number entered does not correspond to any feature";
 
     public Person (String name, int semesterIndex) {
         setPersonName(name);
@@ -264,7 +265,11 @@ public class Person {
                         }
                     }
                     modulesAddedMap.get(moduleCode).setGrade(gradeValue);
+                } else {
+                    System.out.println(ERROR_EDIT_OPTION);
                 }
+            } else {
+                System.out.println(ERROR_NOT_ADDED);
             }
         } catch (Exception e) {
             System.out.println(ERROR_INVALID_COMMAND);
@@ -299,6 +304,7 @@ public class Person {
                 modulesAddedMap.remove(moduleCode);
                 for (Module item : modulesList) {
                     if (item.getModuleCode().equals(moduleCode)) {
+                        System.out.println(item.getModuleCode() + " has been removed from the list");
                         modulesList.remove(item);
                         break;
                     }
