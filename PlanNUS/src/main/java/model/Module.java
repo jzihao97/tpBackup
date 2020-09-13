@@ -4,7 +4,7 @@ public class Module {
     private String moduleCode;
     private int semesterIndex; // 1 to 8
     private String grade;
-    private Integer moduleCredit;
+    private int moduleCredit;
 
     public Module (String moduleCode, int semesterIndex, String grade) {
         setModuleCode(moduleCode);
@@ -16,24 +16,28 @@ public class Module {
         return moduleCode;
     }
 
-    public Integer getModuleCredit() { return moduleCredit;}
+    public Integer getModuleCredit() {
+        return moduleCredit;
+    }
 
-    public void setModuleCredit(Integer moduleCredit) { this.moduleCredit = moduleCredit;}
-
-    public void setModuleCode(String moduleCode) {
-        this.moduleCode = moduleCode;
+    public String getGrade() {
+        return grade;
     }
 
     public int getSemesterIndex() {
         return semesterIndex;
     }
 
-    public void setSemesterIndex(int semesterIndex) {
-        this.semesterIndex = semesterIndex;
+    public void setModuleCredit(Integer moduleCredit) {
+        this.moduleCredit = moduleCredit;
     }
 
-    public String getGrade() {
-        return grade;
+    public void setModuleCode(String moduleCode) {
+        this.moduleCode = moduleCode;
+    }
+
+    public void setSemesterIndex(int semesterIndex) {
+        this.semesterIndex = semesterIndex;
     }
 
     public void setGrade(String grade) {
