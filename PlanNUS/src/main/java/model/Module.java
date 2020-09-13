@@ -6,10 +6,11 @@ public class Module {
     private String grade;
     private int moduleCredit;
 
-    public Module (String moduleCode, int semesterIndex, String grade) {
+    public Module (String moduleCode, int semesterIndex, String grade, int moduleCredit) {
         setModuleCode(moduleCode);
         setSemesterIndex(semesterIndex);
         setGrade(grade);
+        setModuleCredit(moduleCredit);
     }
 
     public String getModuleCode() {
@@ -28,7 +29,7 @@ public class Module {
         return semesterIndex;
     }
 
-    public void setModuleCredit(Integer moduleCredit) {
+    public void setModuleCredit(int moduleCredit) {
         this.moduleCredit = moduleCredit;
     }
 

@@ -89,6 +89,7 @@ public class Person {
                 System.out.println("Semester you plan to take " + moduleCode.toUpperCase() + "?");
                 userInput = in.nextLine();
                 int semesterValue = Integer.parseInt(userInput);
+
                 if (!checkValidSemester(semesterValue)) {
                     System.out.println(ERROR_INVALID_SEMESTER_INDEX);
                     return;
@@ -100,19 +101,29 @@ public class Person {
                     System.out.println(ERROR_INVALID_GRADE);
                     return;
                 }
-                Module newModuleToAdd = new Module(moduleCode, semesterValue, gradeValue);
-                int mapIndex = allModules.getModuleMap().get(moduleCode);
-                newModuleToAdd.setModuleCredit(allModules.getModuleFullDetails()[mapIndex].getModuleCredit());
+                int moduleCredit = getModuleCreditForModule(moduleCode);
+                Module newModuleToAdd = new Module(moduleCode, semesterValue, gradeValue, moduleCredit);
                 modulesList.add(newModuleToAdd);
                 modulesAddedMap.put(moduleCode,newModuleToAdd);
                 System.out.println(newModuleToAdd.getModuleCode()
                         + " added into Semester " + semesterValue + ".");
-            } else { //module not offered by NUS
+            } else {
                 System.out.println(moduleCode + ERROR_NOT_OFFERED);
             }
         } catch (Exception e) {
             System.out.println(ERROR_INVALID_COMMAND);
         }
+    }
+
+    /**
+     * Function to return module credits for module code
+     *
+     * @param moduleCode string of module code
+     * @return int of module credit
+     */
+    public int getModuleCreditForModule(String moduleCode) {
+        int mapIndex = allModules.getModuleMap().get(moduleCode);
+        return allModules.getModuleFullDetails()[mapIndex].getModuleCredit();
     }
 
     /**
