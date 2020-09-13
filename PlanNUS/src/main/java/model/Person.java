@@ -195,6 +195,8 @@ public class Person {
             //Fallthrough
         case "WU":           //Withdrawn from University
             //Fallthrough
+        case "EXE" :         //Exempted
+            //Fallthrough
         case "NT":           //Not taken
             return true;
         default:
