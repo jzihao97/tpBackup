@@ -1,6 +1,12 @@
 import model.Person;
 import moduledata.ModuleInitializer;
 
+import model.CAPlist;
+import moduledata.ModuleDatum;
+import moduledata.ModuleInitializer;
+
+import java.text.DecimalFormat;
+import java.math.RoundingMode;
 import java.util.Scanner;
 
 public class Main {
@@ -33,5 +39,11 @@ public class Main {
 //        }
 
         Bob.moduleTracker();
+
+        CAPlist CAPlist = new CAPlist();
+        CAPlist.setInitialCAP();
+        CAPlist.setCurrentCAP();
+        CAPlist.setTargetCAP();
+//        CAPlist.setSUs(); WORK IN PROCESS!!
     }
 }
