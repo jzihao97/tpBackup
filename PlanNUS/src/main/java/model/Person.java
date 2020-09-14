@@ -24,6 +24,15 @@ public class Person {
     private final String ERROR_DUPLICATE_MOD = "You already have this mod on your calendar!";
     private final String ERROR_NOT_ADDED = "You have not added this module into your list yet";
     private final String ERROR_EDIT_OPTION = "Number entered does not correspond to any feature";
+    private final String WELCOME_MESSAGE = "Welcome to Module Tracker! Commands available are:\n";
+    private final String ADD_COMMAND = "ADD";
+    private final String EDIT_COMMAND = "EDIT";
+    private final String REMOVE_COMMAND = "REMOVE";
+    private final String EXIT_COMMAND = "EXIT";
+    private final String COMMANDS_LIST = "  add <module code>\n" +
+            "  edit <module code>\n" +
+            "  remove <module code>\n" +
+            "Type a command to continue...";
 
 
     //Setter and Getter
@@ -63,33 +72,29 @@ public class Person {
 
 
     //Main methods
-    public String commandsList() {
-        String commands = "  add <module code>\n" +
-                "  edit <module code>\n" +
-                "  remove <module code>\n" +
-                "Type a command to continue...";
-        return commands;
+    private void printCommandsList() {
+        System.out.println(COMMANDS_LIST);
     }
 
     public void moduleTracker() {
-        System.out.println("Welcome to Module Tracker! Commands available are:\n" +
-                commandsList());
+        System.out.println(WELCOME_MESSAGE);
+        printCommandsList();
 
         Scanner scanner = new Scanner(System.in);
         String fullInput = scanner.nextLine().toUpperCase();
         String[] inputs = fullInput.split(" ");
 
-        while (!inputs[0].equals("EXIT")) {
-            if (inputs[0].equals("ADD")) {
+        while (!inputs[0].equals(EXIT_COMMAND)) {
+            if (inputs[0].equals(ADD_COMMAND)) {
                 addModule(scanner, inputs[1]);
-            } else if (inputs[0].equals("EDIT")) {
+            } else if (inputs[0].equals(EDIT_COMMAND)) {
                 editModule(scanner, inputs[1]);
-            } else if (inputs[0].equals("REMOVE")) {
+            } else if (inputs[0].equals(REMOVE_COMMAND)) {
                 removeModule(inputs[1]);
             } else {
                 System.out.println(ERROR_INVALID_COMMAND);
             }
-            System.out.println(commandsList());
+            printCommandsList();
             fullInput = scanner.nextLine().toUpperCase();
             inputs = fullInput.split(" ");
         }
@@ -102,13 +107,7 @@ public class Person {
      * If either is invalid, does not add module into user's academic calendar.
      */
     private void addModule(Scanner in, String moduleCode) {
-//        String userInput = in.nextLine(); //format "add cs1231"
-//        if (!checkValidAddCommand(userInput)) {
-//            System.out.println(ERROR_INVALID_COMMAND);
-//            return;
-//        }
         try {
-//            String moduleCode = userInput.split(" ")[1].toUpperCase();
             if (checkIfModOfferedByNUS(moduleCode)) {
                 if (checkIfModTaken(moduleCode)) {
                     System.out.println(ERROR_DUPLICATE_MOD);
@@ -336,37 +335,4 @@ public class Person {
             System.out.println("MC: " + module.getModuleCredit());
         }
     }
-
-    /**
-     * Returns true if input is a valid add command,
-     * else returns false.
-     *
-     * @param userInput user's input
-     * @return boolean of valid command
-     */
-//    private boolean checkValidAddCommand(String userInput) {
-//        return userInput.toLowerCase().startsWith("add");
-//    }
-
-    /**
-     * Returns true if userInput is a valid edit command,
-     * else returns false.
-     *
-     * @param userInput user's input
-     * @return boolean
-     */
-//    private boolean checkValidEditCommand(String userInput) {
-//        return userInput.toLowerCase().startsWith("edit");
-//    }
-
-    /**
-     * Returns true if command is a valid delete command,
-     * else returns false.
-     *
-     * @param userInput user's input
-     * @return boolean
-     */
-//    private boolean checkValidDeleteCommand(String userInput) {
-//        return userInput.toLowerCase().startsWith("delete");
-//    }
 }
