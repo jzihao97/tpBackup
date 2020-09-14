@@ -10,7 +10,6 @@ public class Main {
         Person Bob = new Person("Bob" , 3);
         System.out.println("Oi type la");
         Bob.addModule();
-        System.out.println(Bob.toString());
         Bob.printList();
         Bob.editModule();
         Bob.printList();

@@ -16,7 +16,7 @@ public class Person {
     //CONSTANTS
     private final int STARTING_SEMESTER_INDEX = 1;
     private final int FINAL_SEMESTER_INDEX = 10;
-    private final String ERROR_INVALID_COMMAND = "INVALID ADD COMMAND";
+    private final String ERROR_INVALID_COMMAND = "INVALID COMMAND";
     private final String ERROR_INVALID_SEMESTER_INDEX = "INVALID SEMESTER INDEX";
     private final String ERROR_INVALID_GRADE = "INVALID GRADE VALUE";
     private final String ERROR_NOT_OFFERED = " IS NOT OFFERED BY NUS";
@@ -54,16 +54,8 @@ public class Person {
         return modulesList;
     }
 
-    public void setModulesList(ArrayList<Module> modulesList) {
-        this.modulesList = modulesList;
-    }
-
     public HashMap<String, Module> getModulesAddedMap() {
         return modulesAddedMap;
-    }
-
-    public void setModulesAddedMap(HashMap<String, Module> modulesAddedMap) {
-        this.modulesAddedMap = modulesAddedMap;
     }
 
     /**
@@ -121,7 +113,7 @@ public class Person {
      * @param moduleCode string of module code
      * @return int of module credit
      */
-    public int getModuleCreditForModule(String moduleCode) {
+    private int getModuleCreditForModule(String moduleCode) {
         int mapIndex = allModules.getModuleMap().get(moduleCode);
         return allModules.getModuleFullDetails()[mapIndex].getModuleCredit();
     }
@@ -133,7 +125,7 @@ public class Person {
      * @param userInput user's input
      * @return boolean of valid command
      */
-    public boolean checkValidAddCommand(String userInput) {
+    private boolean checkValidAddCommand(String userInput) {
         return userInput.toLowerCase().startsWith("add");
     }
 
@@ -143,7 +135,7 @@ public class Person {
      * @param moduleCode input module code
      * @return boolean of module code in ModuleDatum
      */
-    public boolean checkIfModOfferedByNUS(String moduleCode) {
+    private boolean checkIfModOfferedByNUS(String moduleCode) {
         return (allModules.getModuleMap().get(moduleCode) > -1);
     }
 
@@ -154,7 +146,7 @@ public class Person {
      * @param moduleCode moduleCode to check
      * @return boolean
      */
-    public boolean checkIfModTaken(String moduleCode) {
+    private boolean checkIfModTaken(String moduleCode) {
         return (modulesAddedMap.containsKey(moduleCode));
     }
 
@@ -165,7 +157,7 @@ public class Person {
      * @param grade grade to check
      * @return boolean
      */
-    public boolean checkValidGrade(String grade) {
+    private boolean checkValidGrade(String grade) {
         switch (grade.toUpperCase()) {
         case "A+":
             //Fallthrough
@@ -223,7 +215,7 @@ public class Person {
      * @param semesterIndex semesterIndex to check
      * @return false
      */
-    public boolean checkValidSemester (int semesterIndex) {
+    private boolean checkValidSemester (int semesterIndex) {
         if (semesterIndex < STARTING_SEMESTER_INDEX || semesterIndex > FINAL_SEMESTER_INDEX) {
             return false;
         } else {
@@ -294,7 +286,7 @@ public class Person {
      * @param userInput user's input
      * @return boolean
      */
-    public boolean checkValidEditCommand(String userInput) {
+    private boolean checkValidEditCommand(String userInput) {
         return userInput.toLowerCase().startsWith("edit");
     }
 
@@ -335,10 +327,9 @@ public class Person {
      * @param userInput user's input
      * @return boolean
      */
-    public boolean checkValidDeleteCommand(String userInput) {
+    private boolean checkValidDeleteCommand(String userInput) {
         return userInput.toLowerCase().startsWith("delete");
     }
-
 
     @Override
     public String toString() {
