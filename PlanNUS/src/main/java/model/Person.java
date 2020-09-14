@@ -3,7 +3,6 @@ package model;
 import moduledata.ModuleInitializer;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -64,12 +63,17 @@ public class Person {
 
 
     //Main methods
-    public void moduleTracker() {
-        System.out.println("Welcome to Module Tracker! Commands available are:\n" +
-                "  add <module code>\n" +
+    public String commandsList() {
+        String commands = "  add <module code>\n" +
                 "  edit <module code>\n" +
                 "  remove <module code>\n" +
-                "Type a command to continue...");
+                "Type a command to continue...";
+        return commands;
+    }
+
+    public void moduleTracker() {
+        System.out.println("Welcome to Module Tracker! Commands available are:\n" +
+                commandsList());
 
         Scanner scanner = new Scanner(System.in);
         String fullInput = scanner.nextLine().toUpperCase();
@@ -85,7 +89,7 @@ public class Person {
             } else {
                 System.out.println(ERROR_INVALID_COMMAND);
             }
-
+            System.out.println(commandsList());
             fullInput = scanner.nextLine().toUpperCase();
             inputs = fullInput.split(" ");
         }
