@@ -216,11 +216,7 @@ public class Person {
      * @return false
      */
     private boolean checkValidSemester (int semesterIndex) {
-        if (semesterIndex < STARTING_SEMESTER_INDEX || semesterIndex > FINAL_SEMESTER_INDEX) {
-            return false;
-        } else {
-            return true;
-        }
+        return (semesterIndex >= STARTING_SEMESTER_INDEX && semesterIndex <= FINAL_SEMESTER_INDEX);
     }
 
     /**
