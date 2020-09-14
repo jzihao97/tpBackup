@@ -1,21 +1,37 @@
 import model.Person;
+import moduledata.ModuleInitializer;
+
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-//        ModuleInitializer allModules =  new ModuleInitializer();
-//        Integer idx = allModules.getModuleMap().get("CS1010");
-//        ModuleDatum cs1010Data = allModules.getModuleFullDetails()[idx];
+        ModuleInitializer allModules =  new ModuleInitializer();
+        Person Bob = new Person("Bob" , 3, allModules);
+
+//        System.out.println("Welcome to PlanNUS! Apps available are:\n" +
+//                "  add <module code>\n" +
+//                "  edit <module code>\n" +
+//                "  remove <module code>\n" +
+//                "Type a command to continue...");
+//        Scanner scanner = new Scanner(System.in);
+//        String fullInput = scanner.nextLine().toUpperCase();
+//        String[] inputs = fullInput.split(" ");
 //
-//        System.out.println(cs1010Data.toString());
-        Person Bob = new Person("Bob" , 3);
-        System.out.println("Oi type la");
-        Bob.addModule();
-        Bob.printList();
-        Bob.editModule();
-        Bob.printList();
-        Bob.editModule();
-        Bob.printList();
-        Bob.removeModule();
-        Bob.printList();
+//        while (!inputs[0].equals("EXIT")) {
+//            if (inputs[0].equals("ADD")) {
+//                addModule(scanner, inputs[1]);
+//            } else if (inputs[0].equals("EDIT")) {
+//                editModule(scanner, inputs[1]);
+//            } else if (inputs[0].equals("REMOVE")) {
+//                removeModule(inputs[1]);
+//            } else {
+//                System.out.println(ERROR_INVALID_COMMAND);
+//            }
+//
+//            fullInput = scanner.nextLine().toUpperCase();
+//            inputs = fullInput.split(" ");
+//        }
+
+        Bob.moduleTracker();
     }
 }
