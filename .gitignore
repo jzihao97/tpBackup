@@ -1,3 +1,4 @@
 .idea/
 Reference/.gradle/
 PlanNUS/.gradle/
+*.class
