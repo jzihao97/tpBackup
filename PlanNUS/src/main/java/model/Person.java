@@ -309,6 +309,52 @@ public class Person {
     }
 
     /**
+     * Return grade's corresponding academic point score.
+     * Returns -1 if the grade is an additional grading option.
+     *
+     * @param grade grade of module
+     * @return
+     */
+    private double getAcademicPoints (String grade) {
+        double academicPoints = 0.00;
+        switch (grade.toUpperCase()) {
+        case "A+":
+            //Fallthrough
+        case "A":
+            academicPoints = 5.00;
+            break;
+        case "A-":
+            academicPoints = 4.50;
+            break;
+        case "B+":
+            academicPoints = 4.00;
+            break;
+        case "B":
+            academicPoints = 3.50;
+            break;
+        case "B-":
+            academicPoints = 3.00;
+            break;
+        case "C+":
+            academicPoints = 2.50;
+            break;
+        case "C":
+            academicPoints = 2.00;
+            break;
+        case "D+":
+            academicPoints = 1.50;
+            break;
+        case "D":
+            academicPoints = 1.00;
+            break;
+        default:
+            academicPoints = -1.00;
+            break;
+        }
+        return academicPoints;
+    }
+
+    /**
      * Returns true if semsesterIndex is a valid semesterIndex
      * else returns false
      *
