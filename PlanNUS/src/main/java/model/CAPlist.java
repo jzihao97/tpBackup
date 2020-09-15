@@ -17,6 +17,19 @@ public class CAPlist {
 
     //CONSTANTS
     private final String ERROR_INVALID_COMMAND = "INVALID COMMAND";
+    private final String WELCOME_MESSAGE = "Welcome to CAP Calculator! Commands available are:\n";
+    private final String EXITPROMPT_MESSAGE = "To exit CAP Calculator, use command: \"exit\"\n\n";
+    private final String INITIALIZING_MESSAGE = "Initializing your CAP..." ;
+    private final String COMMANDPROMPT_MESSAGE = "Type a command to continue...";
+    private final String CURRENT_COMMAND = "CURRENT";
+    private final String SETCURRENT_COMMAND = "SET CURRENT";
+    private final String SETTARGET_COMMAND = "REMOVE";
+    private final String SETSU_COMMAND = "SET SU";
+    private final String EXIT_COMMAND = "EXIT";
+    private final String COMMANDS_LIST = "  Current\n" +
+            "  Set current\n" +
+            "  Set target\n" +
+            "  Set SU\n";
 
     public CAPlist() {
         setNumberOfCAP(1);
@@ -33,26 +46,20 @@ public class CAPlist {
 
     //Main Function
     public void CAPCalculator() {
-        System.out.println("Welcome to CAP Calculator! Commands available are:\n" +
-                "  Current\n" +
-                "  Set current\n" +
-                "  Set target\n" +
-                "  Set SU\n" +
-                "To exit CAP Calculator, use command: \"exit\"\n\n" +
-                "Initializing your CAP...");
-                setInitialCAP();
-        System.out.println("Type a command to continue...");
+        System.out.println(WELCOME_MESSAGE + COMMANDS_LIST + EXITPROMPT_MESSAGE + INITIALIZING_MESSAGE);
+        setInitialCAP();
+        System.out.println(COMMANDPROMPT_MESSAGE);
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine().toUpperCase();
 
-        while (!input.equals("EXIT")) {
-            if (input.equals("CURRENT")) {
+        while (!input.equals(EXIT_COMMAND)) {
+            if (input.equals(CURRENT_COMMAND)) {
                 printCurrentCAP();
-            } else if (input.equals("SET CURRENT")) {
+            } else if (input.equals(SETCURRENT_COMMAND)) {
                 setCurrentCAP();
-            } else if (input.equals("SET TARGET")) {
+            } else if (input.equals(SETTARGET_COMMAND)) {
                 setTargetCAP();
-            } else if (input.equals("SET SU")) {
+            } else if (input.equals(SETSU_COMMAND)) {
                 setSUs();
             }else {
                 System.out.println(ERROR_INVALID_COMMAND);
@@ -184,9 +191,9 @@ public class CAPlist {
             totalGradedMCs += module.getModuleCredit();
         }
 
-        System.out.println("Your CAP without SU any module is: " +
+        System.out.println("Your CAP without S/U any module is: " +
                 formatFinalCAP.format(totalCAP/(double)totalGradedMCs));
-        System.out.println("Your graded MCs without SU any module is: " + totalGradedMCs);
+        System.out.println("Your graded MCs without S/U any module is: " + totalGradedMCs);
 
         for (Module module:sortedModuleList) {
             totalCAP -= module.getCAP() * module.getModuleCredit();
