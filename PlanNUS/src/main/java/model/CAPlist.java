@@ -4,13 +4,15 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
-import model.CAP;
-import model.Module;
+import moduledata.ModuleInitializer;
 
 public class CAPlist {
-    private ArrayList<Module> modulesListToSU = new ArrayList<>();
-    private ArrayList<CAP> CAPlist = new ArrayList<>();
-    private DecimalFormat formatFinalCAP = new DecimalFormat("#.##");
+    private final ModuleInitializer allModules =  new ModuleInitializer();
+    private final Person Bob = new Person("Bob" , 3, allModules);
+    private final ArrayList<Module> bobModuleList = Bob.getModulesList();
+    private final ArrayList<Module> modulesListToSU = new ArrayList<>();
+    private final ArrayList<CAP> CAPlist = new ArrayList<>();
+    private final DecimalFormat formatFinalCAP = new DecimalFormat("#.##");
     private int numberOfCAP;
 
     //CONSTANTS
@@ -65,7 +67,19 @@ public class CAPlist {
      * User have taken and set the initial CAP and graded MCs.
      */
     public void setInitialCAP() {
-        CAP currentCAP = new CAP(0.00, 0);
+        double academicPoint = 0.00;
+        int gradedMcs = 0;
+        CAP currentCAP = new CAP(0, 0);
+        formatFinalCAP.setRoundingMode(RoundingMode.UP);
+        if (!bobModuleList.isEmpty()) {
+            for (Module module : bobModuleList) {
+                academicPoint += module.getCAP() * module.getModuleCredit();
+                gradedMcs += module.getModuleCredit();
+            }
+            academicPoint = academicPoint / ((double) gradedMcs);
+            currentCAP.setCAP(academicPoint);
+            currentCAP.setmoduleCredit(gradedMcs);
+        }
         CAPlist.add(currentCAP);
         printCurrentCAP();
     }
@@ -119,7 +133,6 @@ public class CAPlist {
      * @param targetGradedMC user's target MCs to get the target grades
      */
     public void calculateResults(double currentCAP,double targetCAP,int gradedMC,int targetGradedMC) {
-        formatFinalCAP.setRoundingMode(RoundingMode.UP);
 
         double totalCAP = 0.00;
         double tempCAP = currentCAP;
@@ -131,7 +144,7 @@ public class CAPlist {
         }
 
         if (tempCAP <= 5) {
-            System.out.println("You should achieve a minimum CAP of " + formatFinalCAP.format(tempCAP) + " for your next " +
+            System.out.println("You should achieve a minimum CAP of " + formatCAPToString(tempCAP) + " for your next " +
                     targetGradedMC + " MCs to achieve your target CAP of " + targetCAP + ".");
         } else {
             System.out.println("OPSS!! Looks like you are not able to achieve your target CAP of " + targetCAP +
@@ -141,7 +154,7 @@ public class CAPlist {
 
     public void setSUs() {
         Scanner in = new Scanner(System.in);
-        int numberOfModules = 0;
+        int numberOfModules;
         System.out.println("How many modules did you take this semester?");
         numberOfModules = Integer.parseInt(in.nextLine());
         for (int i = 0; i<numberOfModules; i++) {
@@ -178,6 +191,11 @@ public class CAPlist {
             System.out.println("Your graded MCs after SUing this module is: " + totalGradedMCs);
         }
     }
+
+    private String formatCAPToString(double academicPoint) {
+        return formatFinalCAP.format(academicPoint);
+    }
+
     public void printCurrentCAP() {
         CAP currentCAP = CAPlist.get(0);
         System.out.println("Your current now CAP is: " + currentCAP.getCAP());
