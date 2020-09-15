@@ -15,12 +15,20 @@ public class CAPlist {
         setNumberOfCAP(1);
     }
 
+    //Getter and Setter
     public void setNumberOfCAP(int numberOfCAP) {
         this.numberOfCAP = numberOfCAP;
     }
 
     public int getNumberOfCAP() {
         return numberOfCAP;
+    }
+
+    //Main Function
+    public void CAPCalculator() {
+        setInitialCAP();
+        setCurrentCAP();
+        setTargetCAP();
     }
 
     /**
@@ -40,10 +48,13 @@ public class CAPlist {
     public void setCurrentCAP() {
         Scanner in = new Scanner(System.in);
         CAP currentCAP = CAPlist.get(0);
+
         System.out.println("What is your current CAP?");
         currentCAP.setCAP(Double.parseDouble(in.nextLine()));
+
         System.out.println("How many graded MCs have you taken?");
         currentCAP.setmoduleCredit(Integer.parseInt(in.nextLine()));
+
         System.out.println("Done! ");
         printCurrentCAP(currentCAP.getCAP(), currentCAP.getmoduleCredit());
     }
@@ -54,11 +65,13 @@ public class CAPlist {
     public void setTargetCAP() {
         Scanner in = new Scanner(System.in);
         CAP targetCAP = new CAP(0.00,0);
+
         System.out.println("What is your target CAP?");
         targetCAP.setCAP(Double.parseDouble(in.nextLine()));
+
         System.out.println("How many graded MCs you are taking to achieve the target CAP?");
         targetCAP.setmoduleCredit(Integer.parseInt(in.nextLine()));
-        calculateResults(CAPlist.get(0).getCAP(),targetCAP.getCAP(),CAPlist.get(0).getmoduleCredit(),targetCAP.getmoduleCredit());
+        calculateResults(CAPlist.get(0).getCAP(), targetCAP.getCAP(), CAPlist.get(0).getmoduleCredit(), targetCAP.getmoduleCredit());
     }
 
     /**
@@ -71,13 +84,16 @@ public class CAPlist {
     public void calculateResults(double currentCAP,double targetCAP,int gradedMC,int targetGradedMC) {
         DecimalFormat formatFinalCAP = new DecimalFormat("#.##");
         formatFinalCAP.setRoundingMode(RoundingMode.UP);
+
         double totalCAP = 0.00;
         double tempCAP = currentCAP;
         int totalMCs = gradedMC + targetGradedMC;
+
         while (targetCAP > totalCAP && tempCAP <= 5) {
             tempCAP+=0.01;
             totalCAP = ((currentCAP * gradedMC) + (tempCAP * targetGradedMC))/(double)totalMCs;
         }
+
         if (tempCAP <= 5) {
             System.out.println("You should achieve a minimum CAP of " + formatFinalCAP.format(tempCAP) + " for your next " +
                     targetGradedMC + " MCs to achieve your target CAP of " + targetCAP + ".");
@@ -96,7 +112,6 @@ public class CAPlist {
 //            System.out.println("What module did you take?");
 //        }
 //    }
-
 
     public void printCurrentCAP(double currentCAP, int gradedMC) {
         System.out.println("Your current now CAP is: " + currentCAP);
