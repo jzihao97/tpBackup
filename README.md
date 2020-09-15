@@ -1,15 +1,23 @@
 # AY2020/21 CS2113 Team project
 
-## plaNUS
+## plaNUS 
 
 #### Foreword
+
 plaNUS is a greenfield project which aims to solve the gap in undergraduate academic planning in NUS.
 With the `Academic Calendar Planner`,plaNUS will be able to assist undergraduate students in forcasting their academic journey for their 4 or 5 years in NUS.
 With the `CAP Calulator` , plaNUS will be able to tell you your current CAP and forecast future grades needed to achieve your target CAP.
 
 #### Target User Profile
+
 1. All Fresh NUS Undergraduates
 1. NUS Undergraduates who have completed at least 1 semester of study
+
+##### User Stories
+
+1. As a fresh undergraduate, I am able to visualize the modules in the recommended schedule and course requirements. This would allow me to better plan out my academic journey for the next 4-5 years in NUS.
+1. As an undergraduate with at least 1 semester of study completed, I am able to calculate my CAP. This allows me to forecast my own expected graduation CAP and if they match my expected CAP.
+1. As an undergraduate with at least 1 semester of study completed, I am able to print out a personalised list of modules taken so far and grades obtained. This would allow me to track my academic progression in NUS. 
 
 #### Feature List
 
@@ -29,11 +37,11 @@ With the `CAP Calulator` , plaNUS will be able to tell you your current CAP and 
 
 Display | Name | Role  | Github Profile
 ---|:---:|:---:|:---:
-![](https://avatars3.githubusercontent.com/u/60382285?s=400&u=d728a3f419132a310adbe50fbe5c46cb57798dff&v=4) | Jerrold Lam | Team Leader | [jerroldlam](https://github.com/jerroldlam "Github User Profile")
-![](https://avatars1.githubusercontent.com/u/56764814?s=400&v=4) | Khenus Tan | Git and Integration Expert | [Khenus](https://github.com/Khenus "Github User Profile")
-![](https://avatars3.githubusercontent.com/u/60414537?s=400&v=4) | Harry Lee | Deliverables Expert | [harryleecp](https://github.com/harryleecp "Github User Profile")
-![](https://avatars3.githubusercontent.com/u/57383789?s=400&v=4) | Ju Zihao | Scheduler Expert | [JuZihao](https://github.com/JuZihao "Github User Profile")
-![](https://avatars3.githubusercontent.com/u/49282734?s=400&u=68bc65e78f6a1185fb957cfb00d1b0ab29a3080f&v=4) | Vanessa Kang | Code Quality Expert | [Vanessa-Kang](https://github.com/vanessa-kang "Github User Profile")
+![](https://avatars3.githubusercontent.com/u/60382285?s=100) | Jerrold Lam | Team Leader | [jerroldlam](https://github.com/jerroldlam "Github User Profile")
+![](https://avatars3.githubusercontent.com/u/56764814?s=100) | Khenus Tan | Git and Integration Expert | [Khenus](https://github.com/Khenus "Github User Profile")
+![](https://avatars3.githubusercontent.com/u/60414537?s=100) | Harry Lee | Deliverables Expert | [harryleecp](https://github.com/harryleecp "Github User Profile")
+![](https://avatars3.githubusercontent.com/u/57383789?s=100) | Ju Zihao | Scheduler Expert | [JuZihao](https://github.com/JuZihao "Github User Profile")
+![](https://avatars3.githubusercontent.com/u/49282734?s=100) | Vanessa Kang | Code Quality Expert | [Vanessa-Kang](https://github.com/vanessa-kang "Github User Profile")
 
 ## Constraints
 
