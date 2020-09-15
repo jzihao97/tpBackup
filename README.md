@@ -1,6 +1,6 @@
 # AY2020/21 CS2113 Team project
 
-## plaNUS 
+## planNUS 
 
 #### Foreword
 
@@ -8,23 +8,62 @@ plaNUS is a greenfield project which aims to solve the gap in undergraduate acad
 With the `Academic Calendar Planner`,plaNUS will be able to assist undergraduate students in forecasting their academic journey for their 4 or 5 years in NUS.
 With the `CAP Calulator` , plaNUS will be able to tell you your current CAP and forecast future grades needed to achieve your target CAP.
 
-#### Target User Profile
+## Target User Profile
 
 1. All Fresh NUS Undergraduates
 1. NUS Undergraduates who have completed at least 1 semester of study
 
-##### User Stories
+#### User Stories
 
 1. As a fresh undergraduate, I am able to visualize the modules in the recommended schedule and course requirements. This would allow me to better plan out my academic journey for the next 4-5 years in NUS.
 1. As an undergraduate with at least 1 semester of study completed, I am able to calculate my CAP. This allows me to forecast my own expected graduation CAP and if they match my expected CAP.
 1. As an undergraduate with at least 1 semester of study completed, I am able to print out a personalised list of modules taken so far and grades obtained. This would allow me to track my academic progression in NUS. 
 
-#### Feature List (for V1.0)
+## Feature List (for V1.0)
 
 1. Academic Calendar Planner
 1. CAP Calculator
 
-#### Planned Feature List for the future
+## Command Syntax
+
+### Main Program
+
+To exit planNUS : `exit`
+
+**Note:** The typing of `exit` is case-insensitive.
+
+### Academic Planner
+To enter in Academic Planner : `acadPlan`
+
+**Note:** The typing of `acadPlan` is case-insensitive.
+
+#### In Academic Planner
+
+Adding a module into the calendar : `add {module code}`
+
+Removing a module from the calendar: `remove {module code}`
+
+Editing a module from the calendar: `edit {module code}`
+
+**Note** The typing of commands are case-insensitive.
+
+### CAP Calculator
+To enter into CAP Calulator : `capCalc`
+
+**Note:** The typing of `capCalc` is case-insensitive.
+
+#### In CAP Calculator
+
+Print out your current CAP and MCs taken : `current`
+
+Set your current CAP and graded MCs: `set current`
+
+Set target CAP that user want to obtain : `set target`
+
+**Note** The typing of commands are case-insensitive.
+
+
+## Planned Feature List for the future
 
 1. Saving of Academic Calendar Planner into text file.
 2. Loading of Academic Calendar Planner from text file.
