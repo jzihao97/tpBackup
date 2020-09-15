@@ -174,6 +174,11 @@ public class CAPlist {
         int totalGradedMCs = currentCAP.getmoduleCredit();
         double bestCAP = currentCAP.getCAP() * currentCAP.getmoduleCredit();
         int bestGradedMCs = currentCAP.getmoduleCredit();
+        int numberOfModulesToSU = 0;
+
+        ModuleSorter moduleSorter = new ModuleSorter(modulesListToSU);
+        ArrayList<Module> sortedModuleList = moduleSorter.getSortedModuleByGrades();
+
         for (Module module:modulesListToSU) {
             totalCAP += module.getCAP() * module.getModuleCredit();
             totalGradedMCs += module.getModuleCredit();
@@ -183,12 +188,25 @@ public class CAPlist {
                 formatFinalCAP.format(totalCAP/(double)totalGradedMCs));
         System.out.println("Your graded MCs without SU any module is: " + totalGradedMCs);
 
-        for (Module module:modulesListToSU) {
+        for (Module module:sortedModuleList) {
             totalCAP -= module.getCAP() * module.getModuleCredit();
             totalGradedMCs -= module.getModuleCredit();
-            System.out.println("SU your module of " + module.getModuleCode() + " with grade " +module.getGrade()
-                    + " will give you a CAP of: " + formatFinalCAP.format(totalCAP/(double)totalGradedMCs));
-            System.out.println("Your graded MCs after SUing this module is: " + totalGradedMCs);
+            System.out.println("S/U your module of " + module.getModuleCode() + " with grade " +module.getGrade()
+                    + " will give you a CAP of: " + formatCAPToString(totalCAP/(double)totalGradedMCs));
+            System.out.println("Your graded MCs after S/Uing this module is: " + totalGradedMCs);
+            if (bestCAP < (totalCAP/(double)totalGradedMCs)) {
+                bestCAP = totalCAP/(double)totalGradedMCs;
+                bestGradedMCs = totalGradedMCs;
+                numberOfModulesToSU++;
+            }
+        }
+        System.out.println("Your highest CAP possible is: " + formatCAPToString(bestCAP)
+                + " with a graded MC of " + bestGradedMCs);
+        System.out.println("The modules you should be S/Uing are:");
+        for (int i = 0 ; i<numberOfModulesToSU; i++) {
+            Module SUModule = sortedModuleList.get(i);
+            System.out.println(SUModule.getModuleCode() + " with grade " + SUModule.getGrade() +
+                    " and modular credit of " + SUModule.getModuleCredit() + ".");
         }
     }
 
