@@ -28,7 +28,6 @@ public class Main {
             } else {
                 System.out.println(ERROR_INVALID_COMMAND);
             }
-
             input = scanner.nextLine().toLowerCase();
         }
     }

@@ -17,6 +17,21 @@ public class CAPlist {
 
     //CONSTANTS
     private final String ERROR_INVALID_COMMAND = "INVALID COMMAND";
+    private final String AWAIT_COMMAND = "Type a command to continue...";
+    private final String EXIT_COMMAND = "EXIT";
+    private final String CURRENT_COMMAND = "CURRENT";
+    private final String SET_CURRENT_COMMAND = "SET CURRENT";
+    private final String SET_TARGET_COMMAND = "SET TARGET";
+    private final String SET_SU_COMMAND = "SET SU";
+    private final String EXIT_MESSAGE = "EXITING CAPCALC";
+    private final String WELCOME_MESSAGE = "Welcome to CAP Calculator! Commands available are:\n" +
+            "  Current\n" +
+            "  Set current\n" +
+            "  Set target\n" +
+            "  Set SU\n" +
+            "To exit CAP Calculator, use command: \"exit\"\n\n" +
+            "Initializing your CAP...";
+
 
     public CAPlist() {
         setNumberOfCAP(1);
@@ -33,32 +48,27 @@ public class CAPlist {
 
     //Main Function
     public void CAPCalculator() {
-        System.out.println("Welcome to CAP Calculator! Commands available are:\n" +
-                "  Current\n" +
-                "  Set current\n" +
-                "  Set target\n" +
-                "  Set SU\n" +
-                "To exit CAP Calculator, use command: \"exit\"\n\n" +
-                "Initializing your CAP...");
+        System.out.println(WELCOME_MESSAGE);
                 setInitialCAP();
-        System.out.println("Type a command to continue...");
+        System.out.println(AWAIT_COMMAND);
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine().toUpperCase();
 
-        while (!input.equals("EXIT")) {
-            if (input.equals("CURRENT")) {
+        while (!input.equals(EXIT_COMMAND)) {
+            if (input.equals(CURRENT_COMMAND)) {
                 printCurrentCAP();
-            } else if (input.equals("SET CURRENT")) {
+            } else if (input.equals(SET_CURRENT_COMMAND)) {
                 setCurrentCAP();
-            } else if (input.equals("SET TARGET")) {
+            } else if (input.equals(SET_TARGET_COMMAND)) {
                 setTargetCAP();
-            } else if (input.equals("SET SU")) {
+            } else if (input.equals(SET_SU_COMMAND)) {
                 setSUs();
             }else {
                 System.out.println(ERROR_INVALID_COMMAND);
             }
             input = scanner.nextLine().toUpperCase();
         }
+        System.out.println(EXIT_MESSAGE);
     }
 
     /**
@@ -66,7 +76,7 @@ public class CAPlist {
      * This function may be modified so that it reads the list of modules that the
      * User have taken and set the initial CAP and graded MCs.
      */
-    public void setInitialCAP() {
+    private void setInitialCAP() {
         double academicPoint = 0.00;
         int gradedMcs = 0;
         CAP currentCAP = new CAP(0, 0);
@@ -87,7 +97,7 @@ public class CAPlist {
     /**
      * Allows the user to modify his or her current CAP and graded MCs.
      */
-    public void setCurrentCAP() {
+    private void setCurrentCAP() {
         Scanner in = new Scanner(System.in);
         CAP currentCAP = CAPlist.get(0);
         try {
@@ -108,7 +118,7 @@ public class CAPlist {
     /**
      * Allow the user to set the target CAP that he or she want to achieve in the next given MCs.
      */
-    public void setTargetCAP() {
+    private void setTargetCAP() {
         Scanner in = new Scanner(System.in);
         CAP targetCAP = new CAP(0.00,0);
         try {
@@ -132,7 +142,7 @@ public class CAPlist {
      * @param gradedMC user's current graded MCs
      * @param targetGradedMC user's target MCs to get the target grades
      */
-    public void calculateResults(double currentCAP,double targetCAP,int gradedMC,int targetGradedMC) {
+    private void calculateResults(double currentCAP,double targetCAP,int gradedMC,int targetGradedMC) {
 
         double totalCAP = 0.00;
         double tempCAP = currentCAP;
@@ -152,12 +162,12 @@ public class CAPlist {
         }
     }
 
-    public void setSUs() {
+    private void setSUs() {
         Scanner in = new Scanner(System.in);
         int numberOfModules;
         System.out.println("How many modules did you take this semester?");
         numberOfModules = Integer.parseInt(in.nextLine());
-        for (int i = 0; i<numberOfModules; i++) {
+        for (int i = 0; i < numberOfModules; i++) {
             System.out.println("What is the "+ getAbbreviations(i+1) +" module did you take?");
             String fullInputs = in.nextLine();
             String[] input = fullInputs.split(" ");
@@ -167,7 +177,7 @@ public class CAPlist {
         calculateSU();
     }
 
-    public void calculateSU() {
+    private void calculateSU() {
         formatFinalCAP.setRoundingMode(RoundingMode.UP);
         CAP currentCAP = CAPlist.get(0);
         double totalCAP = currentCAP.getCAP() * currentCAP.getmoduleCredit();
@@ -192,25 +202,39 @@ public class CAPlist {
         }
     }
 
+    /**
+     * Returns CAP score as a string
+     *
+     * @param academicPoint academic point to parse
+     * @return string of academic point
+     */
     private String formatCAPToString(double academicPoint) {
         return formatFinalCAP.format(academicPoint);
     }
 
-    public void printCurrentCAP() {
+    /**
+     * Prints out current CAP and number of graded MCs
+     */
+    private void printCurrentCAP() {
         CAP currentCAP = CAPlist.get(0);
         System.out.println("Your current now CAP is: " + currentCAP.getCAP());
         System.out.println("Number of graded MCs taken is: " + currentCAP.getmoduleCredit());
     }
 
-    public String getAbbreviations(int i) {
-        if (i%10==1 & i!= 11) {
-            return i+"st";
-        } else if (i%10==2 & i!=12) {
-            return i+"nd";
-        } else if (i%10==3 & i!=13) {
-            return i+"rd";
+    /**
+     * function to return the abbreviation for the number
+     * @param number number to return the abbreviation for
+     * @return string
+     */
+    private String getAbbreviations(int number) {
+        if (number % 10 == 1 & number != 11) {
+            return number + "st";
+        } else if (number % 10 == 2 & number != 12) {
+            return number + "nd";
+        } else if (number % 10 == 3 & number != 13) {
+            return number + "rd";
         } else {
-            return i+"th";
+            return number + "th";
         }
     }
 }
