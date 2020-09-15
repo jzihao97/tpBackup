@@ -5,7 +5,7 @@
 #### Foreword
 
 plaNUS is a greenfield project which aims to solve the gap in undergraduate academic planning in NUS.
-With the `Academic Calendar Planner`,plaNUS will be able to assist undergraduate students in forcasting their academic journey for their 4 or 5 years in NUS.
+With the `Academic Calendar Planner`,plaNUS will be able to assist undergraduate students in forecasting their academic journey for their 4 or 5 years in NUS.
 With the `CAP Calulator` , plaNUS will be able to tell you your current CAP and forecast future grades needed to achieve your target CAP.
 
 #### Target User Profile
@@ -19,7 +19,7 @@ With the `CAP Calulator` , plaNUS will be able to tell you your current CAP and 
 1. As an undergraduate with at least 1 semester of study completed, I am able to calculate my CAP. This allows me to forecast my own expected graduation CAP and if they match my expected CAP.
 1. As an undergraduate with at least 1 semester of study completed, I am able to print out a personalised list of modules taken so far and grades obtained. This would allow me to track my academic progression in NUS. 
 
-#### Feature List
+#### Feature List (for V1.0)
 
 1. Academic Calendar Planner
 1. CAP Calculator
@@ -37,11 +37,11 @@ With the `CAP Calulator` , plaNUS will be able to tell you your current CAP and 
 
 Display | Name | Role  | Github Profile
 ---|:---:|:---:|:---:
-![](https://avatars3.githubusercontent.com/u/60382285?s=100) | Jerrold Lam | Team Leader | [jerroldlam](https://github.com/jerroldlam "Github User Profile")
+![](https://avatars3.githubusercontent.com/u/60382285?s=400) | Jerrold Lam | Team Leader | [jerroldlam](https://github.com/jerroldlam "Github User Profile")
 ![](https://avatars3.githubusercontent.com/u/56764814?s=100) | Khenus Tan | Git and Integration Expert | [Khenus](https://github.com/Khenus "Github User Profile")
 ![](https://avatars3.githubusercontent.com/u/60414537?s=100) | Harry Lee | Deliverables Expert | [harryleecp](https://github.com/harryleecp "Github User Profile")
 ![](https://avatars3.githubusercontent.com/u/57383789?s=100) | Ju Zihao | Scheduler Expert | [JuZihao](https://github.com/JuZihao "Github User Profile")
-![](https://avatars3.githubusercontent.com/u/49282734?s=100) | Vanessa Kang | Code Quality Expert | [Vanessa-Kang](https://github.com/vanessa-kang "Github User Profile")
+![](https://avatars3.githubusercontent.com/u/49282734?s=400) | Vanessa Kang | Code Quality Expert | [Vanessa-Kang](https://github.com/vanessa-kang "Github User Profile")
 
 ## Constraints
 
