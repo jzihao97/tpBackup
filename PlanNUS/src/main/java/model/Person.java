@@ -4,9 +4,7 @@ import moduledata.ModuleInitializer;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class Person {
     private String personName;
@@ -69,6 +67,7 @@ public class Person {
                 "  add <module code>\n" +
                 "  edit <module code>\n" +
                 "  remove <module code>\n" +
+                "  view\n" +
                 "Type a command to continue...");
 
         Scanner scanner = new Scanner(System.in);
@@ -82,6 +81,8 @@ public class Person {
                 editModule(scanner, inputs[1]);
             } else if (inputs[0].equals("REMOVE")) {
                 removeModule(inputs[1]);
+            } else if (inputs[0].equals("VIEW")) {
+                printCalendar();
             } else {
                 System.out.println(ERROR_INVALID_COMMAND);
             }
@@ -213,6 +214,30 @@ public class Person {
         }
     }
 
+    private void printCalendar() {
+        try {
+            ArrayList<Module> sortedBySem = new ArrayList<>(modulesList);
+            sortedBySem.sort(Comparator.comparing(Module::getSemesterIndex));
+
+            int currSem = 0;
+            int newSem;
+
+            for (Module item : sortedBySem) {
+                newSem = item.getSemesterIndex();
+                if (newSem != (currSem)) {
+                    currSem = newSem;
+                    System.out.println("     SEMESTER " + currSem);
+                }
+                int spacing = 8 + (8 - item.getModuleCode().length());
+                System.out.println(item.getModuleCode()
+                                   + printSpace(spacing)
+                                   + item.getGrade());
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Your academic calendar is currently empty!");
+        }
+    }
+
 
     //Helper functions
     /**
@@ -335,6 +360,17 @@ public class Person {
             System.out.println(module.getGrade());
             System.out.println("MC: " + module.getModuleCredit());
         }
+    }
+
+    /**
+     * Prints num spaces
+     */
+    private String printSpace(int num) {
+        String space = "";
+        for (int i = 0; i < num; i++) {
+            space += " ";
+        }
+        return space;
     }
 
     /**
