@@ -24,16 +24,18 @@ public class Person {
     private final String ERROR_DUPLICATE_MOD = "You already have this mod on your calendar!";
     private final String ERROR_NOT_ADDED = "You have not added this module into your list yet";
     private final String ERROR_EDIT_OPTION = "Number entered does not correspond to any feature";
-    private final String WELCOME_MESSAGE = "Welcome to Module Tracker! Commands available are:\n";
+    private final String WELCOME_MESSAGE = "\nWelcome to Academic Planner!";
     private final String ADD_COMMAND = "ADD";
     private final String EDIT_COMMAND = "EDIT";
     private final String REMOVE_COMMAND = "REMOVE";
     private final String VIEW_COMMAND = "VIEW";
     private final String EXIT_COMMAND = "EXIT";
-    private final String COMMANDS_LIST = "  add <module code>\n" +
+    private final String COMMANDS_LIST = "Available commands are: \n" +
+            "  add <module code>\n" +
             "  edit <module code>\n" +
             "  remove <module code>\n" +
             "  view\n" +
+            "  exit\n" +
             "Type a command to continue...";
 
 
@@ -78,7 +80,7 @@ public class Person {
         System.out.println(COMMANDS_LIST);
     }
 
-    public void moduleTracker() {
+    public void acadPlanner() {
         System.out.println(WELCOME_MESSAGE);
         printCommandsList();
         Scanner scanner = new Scanner(System.in);
@@ -101,6 +103,8 @@ public class Person {
             fullInput = scanner.nextLine().toUpperCase();
             inputs = fullInput.split(" ");
         }
+
+        System.out.println("Thank you for using Academic Planner!");
     }
 
     /**
@@ -240,6 +244,10 @@ public class Person {
                 System.out.println(item.getModuleCode()
                                    + printSpace(spacing)
                                    + item.getGrade());
+            }
+
+            if (sortedBySem.size() == 0) {
+                System.out.println("Sorry there are current no modules being added :(\n");
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Your academic calendar is currently empty!");

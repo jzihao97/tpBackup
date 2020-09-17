@@ -12,7 +12,7 @@ public class Main {
         Person Bob = new Person("Bob" , 3, allModules);
 
         System.out.println("Welcome to PlanNUS! Apps available are:\n" +
-                "  Module Tracker (Use Command: modTrack)\n" +
+                "  Academic Planner (Use Command: acadPlan)\n" +
                 "  CAP Calculator (Use Command: capCalc)\n" +
                 "To exit PlanNUS, use command: \"exit\"\n" +
                 "Type a command to continue...");
@@ -20,8 +20,8 @@ public class Main {
         String input = scanner.nextLine().toLowerCase();
 
         while (!input.startsWith("exit")) {
-            if (input.startsWith("modtrack")) {
-                Bob.moduleTracker();
+            if (input.startsWith("acadplan")) {
+                Bob.acadPlanner();
             } else if (input.startsWith("capcalc")) {
                 CAPlist capList = new CAPlist();
                 capList.CAPCalculator();
