@@ -2,11 +2,10 @@ package model;
 
 import moduledata.ModuleInitializer;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Comparator;
 
 public class Person {
     private String personName;
@@ -25,6 +24,17 @@ public class Person {
     private final String ERROR_DUPLICATE_MOD = "You already have this mod on your calendar!";
     private final String ERROR_NOT_ADDED = "You have not added this module into your list yet";
     private final String ERROR_EDIT_OPTION = "Number entered does not correspond to any feature";
+    private final String WELCOME_MESSAGE = "Welcome to Module Tracker! Commands available are:\n";
+    private final String ADD_COMMAND = "ADD";
+    private final String EDIT_COMMAND = "EDIT";
+    private final String REMOVE_COMMAND = "REMOVE";
+    private final String VIEW_COMMAND = "VIEW";
+    private final String EXIT_COMMAND = "EXIT";
+    private final String COMMANDS_LIST = "  add <module code>\n" +
+            "  edit <module code>\n" +
+            "  remove <module code>\n" +
+            "  view\n" +
+            "Type a command to continue...";
 
 
     //Setter and Getter
@@ -62,30 +72,32 @@ public class Person {
         return modulesAddedMap;
     }
 
-
+    
     //Main methods
-    public void moduleTracker() {
-        System.out.println("Welcome to Module Tracker! Commands available are:\n" +
-                "  add <module code>\n" +
-                "  edit <module code>\n" +
-                "  remove <module code>\n" +
-                "Type a command to continue...");
+    private void printCommandsList() {
+        System.out.println(COMMANDS_LIST);
+    }
 
+    public void moduleTracker() {
+        System.out.println(WELCOME_MESSAGE);
+        printCommandsList();
         Scanner scanner = new Scanner(System.in);
         String fullInput = scanner.nextLine().toUpperCase();
         String[] inputs = fullInput.split(" ");
 
-        while (!inputs[0].equals("EXIT")) {
-            if (inputs[0].equals("ADD")) {
+        while (!inputs[0].equals(EXIT_COMMAND)) {
+            if (inputs[0].equals(ADD_COMMAND)) {
                 addModule(scanner, inputs[1]);
-            } else if (inputs[0].equals("EDIT")) {
+            } else if (inputs[0].equals(EDIT_COMMAND)) {
                 editModule(scanner, inputs[1]);
-            } else if (inputs[0].equals("REMOVE")) {
+            } else if (inputs[0].equals(REMOVE_COMMAND)) {
                 removeModule(inputs[1]);
+            } else if (inputs[0].equals(VIEW_COMMAND)) {
+                printCalendar();
             } else {
                 System.out.println(ERROR_INVALID_COMMAND);
             }
-
+            printCommandsList();
             fullInput = scanner.nextLine().toUpperCase();
             inputs = fullInput.split(" ");
         }
@@ -98,13 +110,7 @@ public class Person {
      * If either is invalid, does not add module into user's academic calendar.
      */
     private void addModule(Scanner in, String moduleCode) {
-//        String userInput = in.nextLine(); //format "add cs1231"
-//        if (!checkValidAddCommand(userInput)) {
-//            System.out.println(ERROR_INVALID_COMMAND);
-//            return;
-//        }
         try {
-//            String moduleCode = userInput.split(" ")[1].toUpperCase();
             if (checkIfModOfferedByNUS(moduleCode)) {
                 if (checkIfModTaken(moduleCode)) {
                     System.out.println(ERROR_DUPLICATE_MOD);
@@ -213,6 +219,33 @@ public class Person {
         }
     }
 
+    /**
+     * Prints out person's full calendar
+     */
+    private void printCalendar() {
+        try {
+            ArrayList<Module> sortedBySem = new ArrayList<>(modulesList);
+            sortedBySem.sort(Comparator.comparing(Module::getSemesterIndex));
+
+            int currSem = 0;
+            int newSem;
+
+            for (Module item : sortedBySem) {
+                newSem = item.getSemesterIndex();
+                if (newSem != (currSem)) {
+                    currSem = newSem;
+                    System.out.println("     SEMESTER " + currSem);
+                }
+                int spacing = 8 + (8 - item.getModuleCode().length());
+                System.out.println(item.getModuleCode()
+                                   + printSpace(spacing)
+                                   + item.getGrade());
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Your academic calendar is currently empty!");
+        }
+    }
+
 
     //Helper functions
     /**
@@ -306,6 +339,52 @@ public class Person {
     }
 
     /**
+     * Return grade's corresponding academic point score.
+     * Returns -1 if the grade is an additional grading option.
+     *
+     * @param grade grade of module
+     * @return
+     */
+    private double getAcademicPoints (String grade) {
+        double academicPoints = 0.00;
+        switch (grade.toUpperCase()) {
+        case "A+":
+            //Fallthrough
+        case "A":
+            academicPoints = 5.00;
+            break;
+        case "A-":
+            academicPoints = 4.50;
+            break;
+        case "B+":
+            academicPoints = 4.00;
+            break;
+        case "B":
+            academicPoints = 3.50;
+            break;
+        case "B-":
+            academicPoints = 3.00;
+            break;
+        case "C+":
+            academicPoints = 2.50;
+            break;
+        case "C":
+            academicPoints = 2.00;
+            break;
+        case "D+":
+            academicPoints = 1.50;
+            break;
+        case "D":
+            academicPoints = 1.00;
+            break;
+        default:
+            academicPoints = -1.00;
+            break;
+        }
+        return academicPoints;
+    }
+
+    /**
      * Returns true if semsesterIndex is a valid semesterIndex
      * else returns false
      *
@@ -313,11 +392,7 @@ public class Person {
      * @return false
      */
     private boolean checkValidSemester (int semesterIndex) {
-        if (semesterIndex < STARTING_SEMESTER_INDEX || semesterIndex > FINAL_SEMESTER_INDEX) {
-            return false;
-        } else {
-            return true;
-        }
+        return (semesterIndex >= STARTING_SEMESTER_INDEX && semesterIndex <= FINAL_SEMESTER_INDEX);
     }
 
     @Override
@@ -326,47 +401,13 @@ public class Person {
     }
 
     /**
-     * Prints all mods in the module list
+     * Prints num spaces
      */
-    public void printList() {
-        for (Module module : modulesList) {
-            System.out.println(module.getModuleCode());
-            System.out.println(module.getSemesterIndex());
-            System.out.println(module.getGrade());
-            System.out.println("MC: " + module.getModuleCredit());
+    private String printSpace(int num) {
+        String space = "";
+        for (int i = 0; i < num; i++) {
+            space += " ";
         }
+        return space;
     }
-
-    /**
-     * Returns true if input is a valid add command,
-     * else returns false.
-     *
-     * @param userInput user's input
-     * @return boolean of valid command
-     */
-//    private boolean checkValidAddCommand(String userInput) {
-//        return userInput.toLowerCase().startsWith("add");
-//    }
-
-    /**
-     * Returns true if userInput is a valid edit command,
-     * else returns false.
-     *
-     * @param userInput user's input
-     * @return boolean
-     */
-//    private boolean checkValidEditCommand(String userInput) {
-//        return userInput.toLowerCase().startsWith("edit");
-//    }
-
-    /**
-     * Returns true if command is a valid delete command,
-     * else returns false.
-     *
-     * @param userInput user's input
-     * @return boolean
-     */
-//    private boolean checkValidDeleteCommand(String userInput) {
-//        return userInput.toLowerCase().startsWith("delete");
-//    }
 }

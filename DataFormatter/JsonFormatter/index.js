@@ -15,7 +15,7 @@
 //     examDuration: "",
 //   },
 //   preclusion: "",
-//   attibutes: {
+//   attributes: {
 //     su: false,
 //     sfs: false,
 //     ssgf: false,
@@ -51,6 +51,7 @@ import {details} from './moduleInfo.js';
 import {list} from './moduleList.js';
 import {data} from './data.js';
 import fs from 'fs';
+import { Console } from 'console';
 
 var generation = false;
 var checking = true;
@@ -64,16 +65,18 @@ if (generation === true) {
     faculty: "",
     semester: [],
     preclusion: "",
-    attibutes: [false, false, false, false, false, false, false, false, false],
+    attributes: [false, false, false, false, false, false, false, false, false],
     prerequisite: "",
     corequisite: "",
   }
   
   var finalArr = [];
   
+  
+  var counter = 0;
+  // console.log(details[1797].attributes.su);
   for (var i = 0; i < details.length; i++ ){
-    // console.log(details[i]);
-    var newObj = {...templateObj};
+    var newObj = JSON.parse(JSON.stringify(templateObj)); //Deep clone, take note
   
     newObj.moduleCode = details[i].moduleCode;
     newObj.title = details[i].title;
@@ -92,46 +95,46 @@ if (generation === true) {
     if (details[i].corequisite !== undefined) {
       newObj.corequisite = details[i].corequisite;
     }
+  
+    // console.log(newObj.attributes);
+    // console.log(details[i].attributes)
+  
+    if (details[i].attributes !== undefined) {
+        if (details[i].attributes.su === true) {
+          newObj.attributes[0] = true;
+        } 
     
-    if (details[i].attibutes !== undefined) {
-      for (var k = 0; k < details[i].attibutes.length; k++) {
-        if (details[i].attibutes[k].su === true) {
-          newObj.attibutes[0] = true;
+        if (details[i].attributes.sfs === true) {
+          newObj.attributes[1] = true;
         }
     
-        if (details[i].attibutes[k].sfs === true) {
-          newObj.attibutes[1] = true;
+        if (details[i].attributes.ssgf === true) {
+          newObj.attributes[2] = true;
         }
     
-        if (details[i].attibutes[k].ssgf === true) {
-          newObj.attibutes[2] = true;
-        }
-    
-        if (details[i].attibutes[k].ism === true) {
-          newObj.attibutes[3] = true;
+        if (details[i].attributes.ism === true) {
+          newObj.attributes[3] = true;
         }
         
-        if (details[i].attibutes[k].fyp === true) {
-          newObj.attibutes[4] = true;
+        if (details[i].attributes.fyp === true) {
+          newObj.attributes[4] = true;
         }
     
-        if (details[i].attibutes[k].year === true) {
-          newObj.attibutes[5] = true;
+        if (details[i].attributes.year === true) {
+          newObj.attributes[5] = true;
         }
     
-        if (details[i].attibutes[k].grsu === true) {
-          newObj.attibutes[6] = true;
+        if (details[i].attributes.grsu === true) {
+          newObj.attributes[6] = true;
         }
     
-        if (details[i].attibutes[k].lab === true) {
-          newObj.attibutes[7] = true;
+        if (details[i].attributes.lab === true) {
+          newObj.attributes[7] = true;
         }
     
-        if (details[i].attibutes[k].urop === true) {
-          newObj.attibutes[8] = true;
+        if (details[i].attributes.urop === true) {
+          newObj.attributes[8] = true;
         }
-    
-      }
     }
   
     var tempSemData = [];
@@ -145,7 +148,10 @@ if (generation === true) {
   
     console.log(newObj);
     finalArr.push(newObj);
+    counter++;
   }
+  
+  console.log(counter);
   
   fs.writeFile('out.json', JSON.stringify(finalArr, null, 4), function(err, result) {
     if (err) {
