@@ -1,2 +1,4 @@
-package capcalcexceptions;public class IllegalCAPException {
+package capcalcexceptions;
+
+public class IllegalCAPException extends Exception {
 }
