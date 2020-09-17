@@ -1,41 +1,86 @@
-# AY2020/20 CS2113 Team project
+# AY2020/21 CS2113 Team project
+
+## planNUS 
+
+#### Foreword
+
+plaNUS is a greenfield project which aims to solve the gap in undergraduate academic planning in NUS.
+With the `Academic Calendar Planner`,plaNUS will be able to assist undergraduate students in forecasting their academic journey for their 4 or 5 years in NUS.
+With the `CAP Calulator` , plaNUS will be able to tell you your current CAP and forecast future grades needed to achieve your target CAP.
+
+## Target User Profile
+
+1. All Fresh NUS Undergraduates
+1. NUS Undergraduates who have completed at least 1 semester of study
+
+#### User Stories
+
+1. As a fresh undergraduate, I am able to visualize the modules in the recommended schedule and course requirements. This would allow me to better plan out my academic journey for the next 4-5 years in NUS.
+1. As an undergraduate with at least 1 semester of study completed, I am able to calculate my CAP. This allows me to forecast my own expected graduation CAP and if they match my expected CAP.
+1. As an undergraduate with at least 1 semester of study completed, I am able to print out a personalised list of modules taken so far and grades obtained. This would allow me to track my academic progression in NUS. 
+
+## Feature List (for V1.0)
+
+1. Academic Calendar Planner
+1. CAP Calculator
+
+## Command Syntax
+
+### Main Program
+
+To exit planNUS : `exit`
+
+**Note:** The typing of `exit` is case-insensitive.
+
+### Academic Planner
+To enter in Academic Planner : `acadPlan`
+
+**Note:** The typing of `acadPlan` is case-insensitive.
+
+#### In Academic Planner
+
+Adding a module into the calendar : `add {module code}`
+
+Removing a module from the calendar: `remove {module code}`
+
+Editing a module from the calendar: `edit {module code}`
+
+**Note** The typing of commands are case-insensitive.
+
+### CAP Calculator
+To enter into CAP Calulator : `capCalc`
+
+**Note:** The typing of `capCalc` is case-insensitive.
+
+#### In CAP Calculator
+
+Print out your current CAP and MCs taken : `current`
+
+Set your current CAP and graded MCs: `set current`
+
+Set target CAP that user want to obtain : `set target`
+
+**Note** The typing of commands are case-insensitive.
+
+
+## Planned Feature List for the future
+
+1. Saving of Academic Calendar Planner into text file.
+2. Loading of Academic Calendar Planner from text file.
 
 ## Planning Document
 
-* [Google Drive Folder](https://drive.google.com/drive/folders/1-TdejHDbFp2Xw_Ajygk_BjaJ810fk_fj)
+* [CS2113T-F12-1](https://docs.google.com/document/d/1ikOD_2NS2qUSGtQJpqbVWX7g5mAFV6_jxhiAlka_SSs/edit?usp=sharing "Collaborative Document")
 
+## Team Roles Allocation 
 
-
-## Team Allocation 
-
-*Do choose your roles and task that you wish to work on in this [link](https://docs.google.com/spreadsheets/d/1-3pKWRHezRGpevyItV5VjPeRqTIq3OV4J_NNtGrGpzQ/edit?usp=sharing)*
-
-### List of Team Task
-
-1. Setting up the GitHub team org/repo
-2. Necessary general code enhancements
-3. Setting up tools e.g., GitHub, Gradle
-4. Maintaining the issue tracker
-5. Release management
-6. Updating user/developer docs that are not specific to a feature e.g. documenting the target user profile
-7. Incorporating more useful tools/libraries/frameworks into the product or the project workflow (e.g. automate more aspects of the project workflow using a GitHub plugin)
-
-
-
-### List of Roles and Responsibilities
-
-- *Team lead*: Responsible for overall project coordination.
-- *Documentation* (short for ‘in charge of documentation’): Responsible for the quality of various project documents.
-- *Testing*: Ensures the testing of the project is done properly and on time.
-- *Code quality*: Looks after code quality, ensures adherence to coding standards, etc.
-- *Deliverables and deadlines*: Ensure project deliverables are done on time and in the right format.
-- *Integration*: In charge of versioning of the code, maintaining the code repository, integrating various parts of the software to create a whole.
-- *Scheduling and tracking*: In charge of defining, assigning, and tracking project tasks.
-- *[Tool ABC] expert*: e.g. Intellij expert, Git expert, etc. Helps other team member with matters related to the specific tool.
-
-- *In charge of [Area XYZ]* of the code: e.g. In charge of the code that deals with storage, etc. If you are in charge of an area, you are expected to know that area well, and review changes done to that code.
-
-
+Display | Name | Role  | Github Profile
+---|:---:|:---:|:---:
+![](https://avatars3.githubusercontent.com/u/60382285?s=400) | Jerrold Lam | Team Leader | [jerroldlam](https://github.com/jerroldlam "Github User Profile")
+![](https://avatars3.githubusercontent.com/u/56764814?s=100) | Khenus Tan | Git and Integration Expert | [Khenus](https://github.com/Khenus "Github User Profile")
+![](https://avatars3.githubusercontent.com/u/60414537?s=100) | Harry Lee | Deliverables Expert | [harryleecp](https://github.com/harryleecp "Github User Profile")
+![](https://avatars3.githubusercontent.com/u/57383789?s=100) | Ju Zihao | Scheduler Expert | [JuZihao](https://github.com/JuZihao "Github User Profile")
+![](https://avatars3.githubusercontent.com/u/49282734?s=400) | Vanessa Kang | Code Quality Expert | [Vanessa-Kang](https://github.com/vanessa-kang "Github User Profile")
 
 ## Constraints
 

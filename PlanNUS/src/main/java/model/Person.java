@@ -2,10 +2,10 @@ package model;
 
 import moduledata.ModuleInitializer;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Comparator;
 
 public class Person {
     private String personName;
@@ -28,10 +28,12 @@ public class Person {
     private final String ADD_COMMAND = "ADD";
     private final String EDIT_COMMAND = "EDIT";
     private final String REMOVE_COMMAND = "REMOVE";
+    private final String VIEW_COMMAND = "VIEW";
     private final String EXIT_COMMAND = "EXIT";
     private final String COMMANDS_LIST = "  add <module code>\n" +
             "  edit <module code>\n" +
             "  remove <module code>\n" +
+            "  view\n" +
             "Type a command to continue...";
 
 
@@ -70,7 +72,7 @@ public class Person {
         return modulesAddedMap;
     }
 
-
+    
     //Main methods
     private void printCommandsList() {
         System.out.println(COMMANDS_LIST);
@@ -79,7 +81,6 @@ public class Person {
     public void moduleTracker() {
         System.out.println(WELCOME_MESSAGE);
         printCommandsList();
-
         Scanner scanner = new Scanner(System.in);
         String fullInput = scanner.nextLine().toUpperCase();
         String[] inputs = fullInput.split(" ");
@@ -91,6 +92,8 @@ public class Person {
                 editModule(scanner, inputs[1]);
             } else if (inputs[0].equals(REMOVE_COMMAND)) {
                 removeModule(inputs[1]);
+            } else if (inputs[0].equals(VIEW_COMMAND)) {
+                printCalendar();
             } else {
                 System.out.println(ERROR_INVALID_COMMAND);
             }
@@ -213,6 +216,33 @@ public class Person {
             }
         } catch (Exception e) {
             System.out.println(ERROR_INVALID_COMMAND);
+        }
+    }
+
+    /**
+     * Prints out person's full calendar
+     */
+    private void printCalendar() {
+        try {
+            ArrayList<Module> sortedBySem = new ArrayList<>(modulesList);
+            sortedBySem.sort(Comparator.comparing(Module::getSemesterIndex));
+
+            int currSem = 0;
+            int newSem;
+
+            for (Module item : sortedBySem) {
+                newSem = item.getSemesterIndex();
+                if (newSem != (currSem)) {
+                    currSem = newSem;
+                    System.out.println("     SEMESTER " + currSem);
+                }
+                int spacing = 8 + (8 - item.getModuleCode().length());
+                System.out.println(item.getModuleCode()
+                                   + printSpace(spacing)
+                                   + item.getGrade());
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Your academic calendar is currently empty!");
         }
     }
 
@@ -371,14 +401,13 @@ public class Person {
     }
 
     /**
-     * Prints all mods in the module list
+     * Prints num spaces
      */
-    public void printList() {
-        for (Module module : modulesList) {
-            System.out.println(module.getModuleCode());
-            System.out.println(module.getSemesterIndex());
-            System.out.println(module.getGrade());
-            System.out.println("MC: " + module.getModuleCredit());
+    private String printSpace(int num) {
+        String space = "";
+        for (int i = 0; i < num; i++) {
+            space += " ";
         }
+        return space;
     }
 }
