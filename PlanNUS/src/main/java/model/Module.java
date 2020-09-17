@@ -115,7 +115,6 @@ public class Module implements Comparable<Module>{
 
     @Override
     public int compareTo(Module module) {
-        return (this.getCAP() < module.getCAP() ? -1 :
-                (this.getCAP() == module.getCAP() ? 0 : 1));
+        return (Double.compare(this.getCAP(), module.getCAP()));
     }
 }
