@@ -10,7 +10,7 @@ import java.util.Comparator;
 public class Person {
     private String personName;
     private int semesterIndex;
-    private ArrayList<Module> modulesList = new ArrayList<>();
+    private static ArrayList<Module> modulesList = new ArrayList<>();
     private HashMap<String,Module> modulesAddedMap = new HashMap<>(); // to check if modules has already been added
     private ModuleInitializer allModules;
 
@@ -64,7 +64,7 @@ public class Person {
         }
     }
 
-    public ArrayList<Module> getModulesList() {
+    public static ArrayList<Module> getModulesList() {
         return modulesList;
     }
 

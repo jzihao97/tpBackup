@@ -15,7 +15,7 @@ public class CAP {
     }
 
     public void setCAP(double CAP) throws IllegalCAPException {
-        if (CAP < MAXIMUM_ACADPOINT) {
+        if (CAP <= MAXIMUM_ACADPOINT) {
             this.CAP = CAP;
         } else {
             throw new IllegalCAPException();
