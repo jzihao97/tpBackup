@@ -86,8 +86,7 @@ public class Module implements Comparable<Module>{
         case "CU":           //Completed Unsatisfactorily
             //Fallthrough
         case "S":            //Satisfactory
-            this.CAP = -1.00;
-            break;
+            //Fallthrough
         case "U":            //Unsatisfactory
             //Fallthrough
         case "W":            //Withdrawn
@@ -103,6 +102,8 @@ public class Module implements Comparable<Module>{
         case "EXE":         //Exempted
             //Fallthrough
         case "NT":           //Not taken
+            this.CAP = -1.00;
+            break;
         default:
             this.CAP = 0.00;
             break;
