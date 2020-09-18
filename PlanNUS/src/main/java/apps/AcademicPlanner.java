@@ -1,19 +1,16 @@
-package model;
+package apps;
 
 import moduledata.ModuleInitializer;
+import objects.Module;
+import objects.Person;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.Comparator;
 
-public class Person {
-    private String personName;
-    private int semesterIndex;
-    private static ArrayList<Module> modulesList = new ArrayList<>();
-    private HashMap<String,Module> modulesAddedMap = new HashMap<>(); // to check if modules has already been added
-    private ModuleInitializer allModules;
-
+public class AcademicPlanner {
     //CONSTANTS
     private final int STARTING_SEMESTER_INDEX = 1;
     private final int FINAL_SEMESTER_INDEX = 10;
@@ -38,49 +35,23 @@ public class Person {
             "  exit\n" +
             "Type a command to continue...";
 
+    private ModuleInitializer allModules;
+    private ArrayList<Module> modulesList;
+    private HashMap<String,Module> modulesAddedMap;
+    private Person currentPerson;
 
-    //Setter and Getter
-    public Person (String name, int semesterIndex, ModuleInitializer allModules) {
-        setPersonName(name);
-        setSemesterIndex(semesterIndex);
-        this.allModules =  allModules;
+    public AcademicPlanner(ModuleInitializer allModules, Person currentPerson) {
+        this.allModules = allModules;
+        this.modulesList = currentPerson.getModulesList();
+        this.modulesAddedMap = currentPerson.getModulesAddedMap();
+        this.currentPerson = currentPerson;
     }
 
-    public String getPersonName() {
-        return personName;
-    }
-
-    public void setPersonName(String personName) {
-        this.personName = personName;
-    }
-
-    public int getSemesterIndex() {
-        return semesterIndex;
-    }
-
-    public void setSemesterIndex(int semesterIndex) {
-        if (checkValidSemester(semesterIndex)) {
-            this.semesterIndex = semesterIndex;
-        } else {
-            System.out.println(ERROR_INVALID_SEMESTER_INDEX);
-        }
-    }
-
-    public static ArrayList<Module> getModulesList() {
-        return modulesList;
-    }
-
-    public HashMap<String, Module> getModulesAddedMap() {
-        return modulesAddedMap;
-    }
-
-    
-    //Main methods
     private void printCommandsList() {
         System.out.println(COMMANDS_LIST);
     }
 
-    public void acadPlanner() {
+    public void planner() {
         System.out.println(WELCOME_MESSAGE);
         printCommandsList();
         Scanner scanner = new Scanner(System.in);
@@ -135,10 +106,30 @@ public class Person {
                     System.out.println(ERROR_INVALID_GRADE);
                     return;
                 }
+
                 int moduleCredit = getModuleCreditForModule(moduleCode);
                 Module newModuleToAdd = new Module(moduleCode, semesterValue, gradeValue, moduleCredit);
                 modulesList.add(newModuleToAdd);
-                modulesAddedMap.put(moduleCode,newModuleToAdd);
+                modulesAddedMap.put(moduleCode, newModuleToAdd);
+
+                //Incrementing total MC regardless of SU
+                currentPerson.setCurrentMC(currentPerson.getCurrentMC() + moduleCredit);
+
+                //Incrementing total MC after SU only if module is not SU
+                if (newModuleToAdd.getCAP() != -1.00) {
+                    currentPerson.setCurrentMCAfterSU(currentPerson.getCurrentMCAfterSU() + moduleCredit);
+                    double newMCxGrade = newModuleToAdd.getCAP() * moduleCredit;
+                    currentPerson.setCurrentTotalMCxGrade(currentPerson.getCurrentTotalMCxGrade() + newMCxGrade);
+                }
+
+
+                //Below output are for debugging purposes
+                System.out.println("Current total MC taken: " + currentPerson.getCurrentMC());
+                System.out.println("Current total MC x Grade: " + currentPerson.getCurrentTotalMCxGrade());
+                System.out.println("Current total MC after SU: " + currentPerson.getCurrentMCAfterSU());
+                System.out.println("Current CAP: " + currentPerson.getCurrentTotalMCxGrade() / (double) currentPerson.getCurrentMCAfterSU());
+
+
                 System.out.println(newModuleToAdd.getModuleCode()
                         + " added into Semester " + semesterValue + ".");
             } else {
@@ -176,18 +167,50 @@ public class Person {
                     System.out.println("Semester for " + moduleCode + " successfully updated!");
                 } else if (choice.equals("2")) {
                     System.out.println("Enter the new grade: ");
-                    String gradeValue = in.nextLine();
+                    String gradeValue = in.nextLine().toUpperCase();
                     if (!checkValidGrade(gradeValue)) {
                         System.out.println(ERROR_INVALID_GRADE);
                         return;
                     }
+
+                    double oldCap;
+                    double newCap;
+
+                    System.out.println(moduleCode);
+
                     for (Module item : modulesList) {
                         if (item.getModuleCode().equals(moduleCode)) {
+                            oldCap = item.getCAP();
                             item.setGrade(gradeValue);
+                            newCap = item.getCAP();
+
+                            if (oldCap == -1.00 && newCap != -1.00) {  //Case where previously was SU but new is not SU
+                                currentPerson.setCurrentMCAfterSU(currentPerson.getCurrentMCAfterSU() + item.getModuleCredit());
+                                double newMCxGrade = newCap * item.getModuleCredit();
+                                currentPerson.setCurrentTotalMCxGrade(currentPerson.getCurrentTotalMCxGrade() + newMCxGrade);
+                            }  else if (oldCap != -1.00 && newCap == -1.00) {   //Case where previously was not SU but now is SU
+                                currentPerson.setCurrentMCAfterSU(currentPerson.getCurrentMCAfterSU() - item.getModuleCredit());
+                                double MCxGradeToMinus = oldCap * item.getModuleCredit();
+                                currentPerson.setCurrentTotalMCxGrade(currentPerson.getCurrentTotalMCxGrade() - MCxGradeToMinus);
+                            } else if (oldCap != newCap) {  //Case where previously and new cap are not SU but not the same
+                                double oldMCxGrade = oldCap * item.getModuleCredit();
+                                double newMCxGrade = newCap * item.getModuleCredit();
+                                double MCxGradeToSet = newMCxGrade - oldMCxGrade;
+                                currentPerson.setCurrentTotalMCxGrade(currentPerson.getCurrentTotalMCxGrade() + MCxGradeToSet);
+                            }
                             break;
                         }
                     }
                     modulesAddedMap.get(moduleCode).setGrade(gradeValue);
+
+
+                    //Below output are for debugging purposes
+                    System.out.println("Current total MC taken: " + currentPerson.getCurrentMC());
+                    System.out.println("Current total MC x Grade: " + currentPerson.getCurrentTotalMCxGrade());
+                    System.out.println("Current total MC after SU: " + currentPerson.getCurrentMCAfterSU());
+                    System.out.println("Current CAP: " + currentPerson.getCurrentTotalMCxGrade() / (double) currentPerson.getCurrentMCAfterSU());
+
+
                     System.out.println("Grade for " + moduleCode + " successfully updated!");
                 } else {
                     System.out.println(ERROR_EDIT_OPTION);
@@ -211,10 +234,27 @@ public class Person {
                 for (Module item : modulesList) {
                     if (item.getModuleCode().equals(moduleCode)) {
                         System.out.println(item.getModuleCode() + " has been removed from the list");
+
+                        //Decreasing total MC regardless of SU
+                        currentPerson.setCurrentMC(currentPerson.getCurrentMC() - item.getModuleCredit());
+
+                        //Decreasing total MC after SU only if module is not SU
+                        if (item.getCAP() != -1.00) {
+                            currentPerson.setCurrentMCAfterSU(currentPerson.getCurrentMCAfterSU() - item.getModuleCredit());
+                            double MCxGradeToMinus = item.getCAP() * item.getModuleCredit();
+                            currentPerson.setCurrentTotalMCxGrade(currentPerson.getCurrentTotalMCxGrade() - MCxGradeToMinus);
+                        }
+
                         modulesList.remove(item);
                         break;
                     }
                 }
+
+                //Below output are for debugging purposes
+                System.out.println("Current total MC taken: " + currentPerson.getCurrentMC());
+                System.out.println("Current total MC x Grade: " + currentPerson.getCurrentTotalMCxGrade());
+                System.out.println("Current total MC after SU: " + currentPerson.getCurrentMCAfterSU());
+                System.out.println("Current CAP: " + currentPerson.getCurrentTotalMCxGrade() / (double) currentPerson.getCurrentMCAfterSU());
             } else {
                 System.out.println(ERROR_NOT_ADDED);
             }
@@ -242,8 +282,8 @@ public class Person {
                 }
                 int spacing = 8 + (8 - item.getModuleCode().length());
                 System.out.println(item.getModuleCode()
-                                   + printSpace(spacing)
-                                   + item.getGrade());
+                        + printSpace(spacing)
+                        + item.getGrade());
             }
 
             if (sortedBySem.size() == 0) {
@@ -253,7 +293,6 @@ public class Person {
             System.out.println("Your academic calendar is currently empty!");
         }
     }
-
 
     //Helper functions
     /**

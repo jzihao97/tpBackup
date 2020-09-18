@@ -1,4 +1,6 @@
-package model;
+package objects;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class Module implements Comparable<Module>{
     private String moduleCode;
@@ -6,7 +8,6 @@ public class Module implements Comparable<Module>{
     private String grade;
     private int moduleCredit;
     private double CAP;
-
 
     public Module (String moduleCode, int semesterIndex, String grade, int moduleCredit) {
         setModuleCode(moduleCode);
@@ -46,6 +47,7 @@ public class Module implements Comparable<Module>{
 
     public void setGrade(String grade) {
         this.grade = grade;
+        setCAP(grade);
     }
 
     public void setCAP(String grade) {
@@ -116,5 +118,10 @@ public class Module implements Comparable<Module>{
     @Override
     public int compareTo(Module module) {
         return (Double.compare(this.getCAP(), module.getCAP()));
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }
