@@ -1,6 +1,6 @@
 package model;
 
-public class Module {
+public class Module implements Comparable<Module>{
     private String moduleCode;
     private int semesterIndex; // 1 to 8
     private String grade;
@@ -111,5 +111,10 @@ public class Module {
 
     public double getCAP() {
         return CAP;
+    }
+
+    @Override
+    public int compareTo(Module module) {
+        return (Double.compare(this.getCAP(), module.getCAP()));
     }
 }

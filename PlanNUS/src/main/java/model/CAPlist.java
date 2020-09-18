@@ -4,12 +4,11 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
-import moduledata.ModuleInitializer;
+import capcalcexceptions.IllegalCAPException;
+import static model.Person.getModulesList;
 
 public class CAPlist {
-    private final ModuleInitializer allModules =  new ModuleInitializer();
-    private final Person Bob = new Person("Bob" , 3, allModules);
-    private final ArrayList<Module> bobModuleList = Bob.getModulesList();
+    private final ArrayList<Module> bobModuleList = getModulesList();
     private final ArrayList<Module> modulesListToSU = new ArrayList<>();
     private final ArrayList<CAP> CAPlist = new ArrayList<>();
     private final DecimalFormat formatFinalCAP = new DecimalFormat("#.##");
@@ -17,6 +16,7 @@ public class CAPlist {
 
     //CONSTANTS
     private final String ERROR_INVALID_COMMAND = "INVALID COMMAND";
+    private final String ILLEGAL_CAP_MESSAGE = "ILLEGAL CAP! Your CAP should not be more than 5.00.";
     private final String AWAIT_COMMAND = "Type a command to continue...";
     private final String EXIT_COMMAND = "EXIT";
     private final String CURRENT_COMMAND = "CURRENT";
@@ -32,9 +32,8 @@ public class CAPlist {
             "To exit CAP Calculator, use command: \"exit\"\n\n" +
             "Initializing your CAP...";
 
-
     public CAPlist() {
-        setNumberOfCAP(1);
+        setNumberOfCAP(0);
     }
 
     //Getter and Setter
@@ -46,6 +45,26 @@ public class CAPlist {
         return numberOfCAP;
     }
 
+    public double getTotalAcademicPoints() {
+        double totalAcademicPoints = 0.00;
+        for (CAP cap : CAPlist) {
+            if (cap.getCAP() > 0) {
+                totalAcademicPoints += cap.getCAP() * cap.getmoduleCredit();
+            }
+        }
+        return totalAcademicPoints;
+    }
+
+    public int getTotalModuleCredit() {
+        int totalModuleCredit = 0;
+        for (CAP cap : CAPlist) {
+            if (cap.getCAP() > 0) {
+                totalModuleCredit += cap.getmoduleCredit();
+            }
+        }
+        return totalModuleCredit;
+    }
+
     //Main Function
     public void CAPCalculator() {
         System.out.println(WELCOME_MESSAGE);
@@ -53,6 +72,7 @@ public class CAPlist {
         System.out.println(AWAIT_COMMAND);
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine().toUpperCase();
+        formatFinalCAP.setRoundingMode(RoundingMode.UP);
 
         while (!input.equals(EXIT_COMMAND)) {
             if (input.equals(CURRENT_COMMAND)) {
@@ -72,25 +92,25 @@ public class CAPlist {
     }
 
     /**
-     * Set the initial CAP and graded MCs to be 0.
-     * This function may be modified so that it reads the list of modules that the
-     * User have taken and set the initial CAP and graded MCs.
+     * This function reads the list of modules that the user have taken and set the initial CAP and graded MCs.
+     * If user did not take any module,set the initial CAP and graded MCs to be 0.
      */
     private void setInitialCAP() {
-        double academicPoint = 0.00;
-        int gradedMcs = 0;
-        CAP currentCAP = new CAP(0, 0);
-        formatFinalCAP.setRoundingMode(RoundingMode.UP);
-        if (!bobModuleList.isEmpty()) {
-            for (Module module : bobModuleList) {
-                academicPoint += module.getCAP() * module.getModuleCredit();
-                gradedMcs += module.getModuleCredit();
+        try {
+            if (!bobModuleList.isEmpty()) {
+                for (Module module : bobModuleList) {
+                    CAP currentCAP = new CAP(module.getCAP(), module.getModuleCredit());
+                    CAPlist.add(currentCAP);
+                    setNumberOfCAP(getNumberOfCAP() + 1);
+                }
+            } else {
+                CAP currentCAP = new CAP(0, 0);
+                CAPlist.add(currentCAP);
+                setNumberOfCAP(getNumberOfCAP() + 1);
             }
-            academicPoint = academicPoint / ((double) gradedMcs);
-            currentCAP.setCAP(academicPoint);
-            currentCAP.setmoduleCredit(gradedMcs);
+        }catch (IllegalCAPException e) {
+            System.out.println(ILLEGAL_CAP_MESSAGE);
         }
-        CAPlist.add(currentCAP);
         printCurrentCAP();
     }
 
@@ -99,19 +119,28 @@ public class CAPlist {
      */
     private void setCurrentCAP() {
         Scanner in = new Scanner(System.in);
-        CAP currentCAP = CAPlist.get(0);
         try {
+            CAP currentCAP = new CAP(0.00, 0);
+
             System.out.println("What is your current CAP?");
             currentCAP.setCAP(Double.parseDouble(in.nextLine()));
 
             System.out.println("How many graded MCs have you taken?");
             currentCAP.setmoduleCredit(Integer.parseInt(in.nextLine()));
 
+            CAPlist.clear();
+            CAPlist.add(currentCAP);
             System.out.println("Done!");
             printCurrentCAP();
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             System.out.println(ERROR_INVALID_COMMAND);
-            setInitialCAP();
+            System.out.println(AWAIT_COMMAND);
+        } catch (NumberFormatException e){
+            System.out.println(ERROR_INVALID_COMMAND);
+            System.out.println(AWAIT_COMMAND);
+        } catch (IllegalCAPException e) {
+            System.out.println(ILLEGAL_CAP_MESSAGE);
+            System.out.println(AWAIT_COMMAND);
         }
     }
 
@@ -120,17 +149,22 @@ public class CAPlist {
      */
     private void setTargetCAP() {
         Scanner in = new Scanner(System.in);
-        CAP targetCAP = new CAP(0.00,0);
         try {
+            CAP targetCAP = new CAP(0.00,0);
             System.out.println("What is your target CAP?");
             targetCAP.setCAP(Double.parseDouble(in.nextLine()));
 
             System.out.println("How many graded MCs you are taking to achieve the target CAP?");
             targetCAP.setmoduleCredit(Integer.parseInt(in.nextLine()));
-            calculateResults(CAPlist.get(0).getCAP(), targetCAP.getCAP(), CAPlist.get(0).getmoduleCredit(),
+
+            calculateResults(getTotalAcademicPoints(), targetCAP.getCAP(), getTotalModuleCredit(),
                     targetCAP.getmoduleCredit());
         } catch(NullPointerException e) {
             System.out.println(ERROR_INVALID_COMMAND);
+            System.out.println(AWAIT_COMMAND);
+        } catch (IllegalCAPException e) {
+            System.out.println(ILLEGAL_CAP_MESSAGE);
+            System.out.println(AWAIT_COMMAND);
         }
     }
 
@@ -157,7 +191,7 @@ public class CAPlist {
             System.out.println("You should achieve a minimum CAP of " + formatCAPToString(tempCAP) + " for your next " +
                     targetGradedMC + " MCs to achieve your target CAP of " + targetCAP + ".");
         } else {
-            System.out.println("OPSS!! Looks like you are not able to achieve your target CAP of " + targetCAP +
+            System.out.println("OOPS!! Looks like you are not able to achieve your target CAP of " + targetCAP +
                     " with you target MCs of " + targetGradedMC + ".");
         }
     }
@@ -178,27 +212,43 @@ public class CAPlist {
     }
 
     private void calculateSU() {
-        formatFinalCAP.setRoundingMode(RoundingMode.UP);
-        CAP currentCAP = CAPlist.get(0);
-        double totalCAP = currentCAP.getCAP() * currentCAP.getmoduleCredit();
-        int totalGradedMCs = currentCAP.getmoduleCredit();
-        double bestCAP = currentCAP.getCAP() * currentCAP.getmoduleCredit();
-        int bestGradedMCs = currentCAP.getmoduleCredit();
+        double totalCAP = getTotalAcademicPoints() * getTotalModuleCredit();
+        int totalGradedMCs = getTotalModuleCredit();
+        double bestCAP = totalCAP;
+        int bestGradedMCs = getTotalModuleCredit();
+        int numberOfModulesToSU = 0;
+
+        ModuleSorter moduleSorter = new ModuleSorter(modulesListToSU);
+        ArrayList<Module> sortedModuleList = moduleSorter.getSortedModuleByGrades();
+
         for (Module module:modulesListToSU) {
             totalCAP += module.getCAP() * module.getModuleCredit();
             totalGradedMCs += module.getModuleCredit();
         }
 
-        System.out.println("Your CAP without SU any module is: " +
-                formatFinalCAP.format(totalCAP/(double)totalGradedMCs));
-        System.out.println("Your graded MCs without SU any module is: " + totalGradedMCs);
+        System.out.println("Your CAP without S/U any module is: " +
+                formatCAPToString(totalCAP/(double)totalGradedMCs));
+        System.out.println("Your graded MCs without S/U any module is: " + totalGradedMCs);
 
-        for (Module module:modulesListToSU) {
+        for (Module module:sortedModuleList) {
             totalCAP -= module.getCAP() * module.getModuleCredit();
             totalGradedMCs -= module.getModuleCredit();
-            System.out.println("SU your module of " + module.getModuleCode() + " with grade " +module.getGrade()
-                    + " will give you a CAP of: " + formatFinalCAP.format(totalCAP/(double)totalGradedMCs));
-            System.out.println("Your graded MCs after SUing this module is: " + totalGradedMCs);
+            System.out.println("S/U your module of " + module.getModuleCode() + " with grade " +module.getGrade()
+                    + " will give you a CAP of: " + formatCAPToString(totalCAP/(double)totalGradedMCs));
+            System.out.println("Your graded MCs after S/Uing this module is: " + totalGradedMCs);
+            if (bestCAP < (totalCAP/(double)totalGradedMCs)) {
+                bestCAP = totalCAP/(double)totalGradedMCs;
+                bestGradedMCs = totalGradedMCs;
+                numberOfModulesToSU++;
+            }
+        }
+        System.out.println("Your highest CAP possible is: " + formatCAPToString(bestCAP)
+                + " with a graded MC of " + bestGradedMCs);
+        System.out.println("The modules you should be S/Uing are:");
+        for (int i = 0 ; i<numberOfModulesToSU; i++) {
+            Module SUModule = sortedModuleList.get(i);
+            System.out.println(SUModule.getModuleCode() + " with grade " + SUModule.getGrade() +
+                    " and modular credit of " + SUModule.getModuleCredit() + ".");
         }
     }
 
@@ -209,6 +259,9 @@ public class CAPlist {
      * @return string of academic point
      */
     private String formatCAPToString(double academicPoint) {
+        if (isNaN(academicPoint)) {
+            return "0";
+        }
         return formatFinalCAP.format(academicPoint);
     }
 
@@ -216,13 +269,14 @@ public class CAPlist {
      * Prints out current CAP and number of graded MCs
      */
     private void printCurrentCAP() {
-        CAP currentCAP = CAPlist.get(0);
-        System.out.println("Your current now CAP is: " + currentCAP.getCAP());
-        System.out.println("Number of graded MCs taken is: " + currentCAP.getmoduleCredit());
+        double currentCAP = getTotalAcademicPoints()/(double)getTotalModuleCredit();
+        System.out.println("Your current now CAP is: " + formatCAPToString(currentCAP));
+        System.out.println("Number of graded MCs taken is: " + getTotalModuleCredit());
     }
 
     /**
      * function to return the abbreviation for the number
+     *
      * @param number number to return the abbreviation for
      * @return string
      */
@@ -236,5 +290,9 @@ public class CAPlist {
         } else {
             return number + "th";
         }
+    }
+
+    public boolean isNaN(double academicPoint) {
+        return (academicPoint != academicPoint);
     }
 }

@@ -1,16 +1,25 @@
 package model;
 
+import capcalcexceptions.IllegalCAPException;
+
 public class CAP {
     private double CAP;
     private int moduleCredit;
 
-    public CAP(double CAP,int moduleCredit) {
+    //CONSTANT
+    private final double MAXIMUM_ACADPOINT = 5.00;
+
+    public CAP(double CAP,int moduleCredit) throws IllegalCAPException {
         setCAP(CAP);
         setmoduleCredit(moduleCredit);
     }
 
-    public void setCAP(double CAP) {
-        this.CAP = CAP;
+    public void setCAP(double CAP) throws IllegalCAPException {
+        if (CAP <= MAXIMUM_ACADPOINT) {
+            this.CAP = CAP;
+        } else {
+            throw new IllegalCAPException();
+        }
     }
 
     public void setmoduleCredit(int moduleCredit) {
